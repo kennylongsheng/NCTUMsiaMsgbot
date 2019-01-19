@@ -30,7 +30,6 @@ app.get('/webhook',(req,res)=>{
 app.post('/webhook', (req,res) => {
 	let body = req.body;
 	//console.log(body);
-	console.log('------------------------------------')
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry){
@@ -51,7 +50,7 @@ app.post('/webhook', (req,res) => {
 			}
 			else
 			{
-				console.log(Sender_ID + 'send : ' + entry.messaging[0])
+				console.log(Sender_ID + 'send : ' + entry.messaging[0].attachments[0])
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED')
