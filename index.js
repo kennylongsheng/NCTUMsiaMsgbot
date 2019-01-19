@@ -29,7 +29,7 @@ app.get('/webhook',(req,res)=>{
 
 app.post('/webhook', (req,res) => {
 	let body = req.body;
-	console.log(body);
+	console.log(body.entry[0].messaging[0]);
 	console.log('------------------------------------')
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
