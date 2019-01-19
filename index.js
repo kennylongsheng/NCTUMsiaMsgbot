@@ -50,7 +50,7 @@ app.post('/webhook', (req,res) => {
 			}
 			else
 			{
-				console.log(Sender_ID + 'send : ' + entry.messaging[0].attachments[0])
+				console.log(Sender_ID + 'send : ' + entry.messaging[0].message)
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED')
