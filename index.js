@@ -44,7 +44,7 @@ app.post('/webhook', (req,res) => {
 				console.log(Message)
 				console.log('_____________________________')
 			}
-			else if(entry.messaging[0].attachments)
+			else if(entry.messaging[0].message.attachments[0])
 			{
 				console.log(Sender_ID + ' send an attachment on ' + Time_Stamp);
 			}
