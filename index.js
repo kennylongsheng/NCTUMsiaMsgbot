@@ -7,8 +7,6 @@ const app = express().use(bodyParser.json()); // Creates express http server
 const VERIFY_TOKEN = "<kennybuildnctufbbot>";
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-let Sender_ID,Time_Stamp,Message;
-
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
 app.get('/webhook',(req,res)=>{
@@ -34,9 +32,9 @@ app.post('/webhook', (req,res) => {
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry){
-			Sender_ID = body.entry.id;
-			Time_Stamp = body.entry.time;
-			Message = entry.messaging[0];
+			let Sender_ID = body.entry.id;
+			let Time_Stamp = body.entry.time;
+			let Message = entry.messaging[0];
 			console.log(Sender_ID + ' Send A Message : ' + Message + ' On ' + Time_Stamp);
 		});
 		res.status(200).send('EVENT_RECEIVED')
