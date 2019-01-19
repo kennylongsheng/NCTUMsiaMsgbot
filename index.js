@@ -38,17 +38,16 @@ app.post('/webhook', (req,res) => {
 			let Sender_ID = entry.messaging[0].sender.id;
 			let Time_Stamp = entry.messaging[0].timestamp;
 			let Message = entry.messaging[0].message.text;
+			console.log(Sender_ID + 'send : ' + entry.messaging[0].message)
 			if(entry.messaging[0].message.text)
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
-				console.log('_____________________________');
 			}
 			else if(entry.messaging[0].message.attachments[0])
 			{
-				console.log(Sender_ID + ' send an attachment on ' + Time_Stamp);
-				console.log(entry.messaging[0].message.attachments[0]);
-				console.log('_____________________________');
+				console.log(Sender_ID + ' send an ' + entry.messaging[0].message.attachments[0].type + ' on ' + Time_Stamp);
+				console.log(entry.messaging[0].message.attachments[0])
 			}
 			else
 			{
