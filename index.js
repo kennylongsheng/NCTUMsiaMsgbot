@@ -35,11 +35,12 @@ app.post('/webhook', (req,res) => {
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry){
 			let webhook_event = entry.messaging[0];
-			console.log(webhook_event);
-			let Sender_ID = entry.id;
-			let Time_Stamp = entry.time;
-			let Message = entry.messaging[0];
-			console.log(Sender_ID + ' Send A Message : ' + Message.text + ' On ' + Time_Stamp);
+			console.log(webhook_event); //PAGE_ID = 235798233272453
+
+			let Sender_ID = entry.messaging[0].sender.id;
+			let Time_Stamp = entry.messaging[0].timestamp;
+			let Message = entry.messaging[0].message.text;
+			console.log(Sender_ID + ' Send A Message : ' + Message + ' On ' + Time_Stamp);
 		});
 		res.status(200).send('EVENT_RECEIVED')
 	}
