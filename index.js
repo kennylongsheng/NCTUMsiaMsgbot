@@ -37,7 +37,7 @@ app.post('/webhook', (req,res) => {
 			let Sender_ID = entry.id;
 			let Time_Stamp = entry.time;
 			let Message = entry.messaging[0];
-			console.log(Sender_ID + ' Send A Message : ' + Message + ' On ' + Time_Stamp);
+			console.log(Sender_ID + ' Send A Message : ' + Message.text + ' On ' + Time_Stamp);
 		});
 		res.status(200).send('EVENT_RECEIVED')
 	}
