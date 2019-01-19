@@ -7,6 +7,10 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "heroku",
+    "url": "https://git.heroku.com/young-crag-37620.git"
+  },
   "author": "kenny",
   "license": "ISC",
   "dependencies": {

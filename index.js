@@ -34,8 +34,7 @@ app.post('/webhook', (req,res) => {
 app.get('/webhook',(req,res)=>{
 	// Your verify token. Should be a random string.
 	let VERIFY_TOKEN = "<kennybuildnctufbbot>";
-	const PAGE_ACCESS_TOKEN = "EAAE7iV7ts1ABAFxxAAkqKNhQrlWpTZCNUKbslt5i79t3yZABOJmTD9OUS4vm20jjVmeOv8MxZArW5azSYBdpzZCkc5qDkEN7OvRBKFnTZB4motteC0ZCOa2BKPm1d1RZBax6oE0wek8NBixZCWOcDjfeiZAOfOK7E16blZCf5OklZCuHwZDZD";
-	//process.env.PAGE_ACCESS_TOKEN;
+	const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 
 	// Parse the query params
