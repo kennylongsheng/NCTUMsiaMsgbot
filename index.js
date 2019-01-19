@@ -4,10 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
 
-const VERIFY_TOKEN = "<kennybuildnctufbbot>";
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening on' + PAGE_ACCESS_TOKEN));
+app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
 app.get('/webhook',(req,res)=>{
 	let mode = req.query['hub.mode'];
@@ -33,20 +33,20 @@ app.post('/webhook', (req,res) => {
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry)
 		{
-			//let webhook_event = entry.messaging[0];
-			//console.log(webhook_event); //PAGE_ID = 235798233272453
-			let Sender_ID = entry.messaging[0].sender.id;
-			let Time_Stamp = entry.messaging[0].timestamp;
-			let Message = entry.messaging[0].message.text;
-			if(entry.messaging[0].message.text)
+			let webhook_event = entry.messaging[0];
+			console.log(webhook_event.message[0]); //PAGE_ID = 235798233272453
+			let Sender_ID = webhook_event.sender.id;
+			let Time_Stamp = webhook_event.timestamp;
+			let Message = webhook_event.message.text;
+			if(webhook_event.message.text)
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
 			}
-			else if(entry.messaging[0].message.attachments[0])
+			else if(webhook_event.message.attachments[0])
 			{
-				console.log(Sender_ID + ' send an ' + entry.messaging[0].message.attachments[0].type + ' on ' + Time_Stamp);
-				console.log(entry.messaging[0].message.attachments[0])
+				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
+				console.log(webhook_event.message.attachments[0])
 			}
 			else
 			{
