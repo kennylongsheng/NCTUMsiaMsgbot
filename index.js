@@ -29,11 +29,13 @@ app.get('/webhook',(req,res)=>{
 
 app.post('/webhook', (req,res) => {
 	let body = req.body;
+	console.log(body);
+	console.log('------------------------------------')
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry){
-			let Sender_ID = body.entry.id;
-			let Time_Stamp = body.entry.time;
+			let Sender_ID = entry.id;
+			let Time_Stamp = entry.time;
 			let Message = entry.messaging[0];
 			console.log(Sender_ID + ' Send A Message : ' + Message + ' On ' + Time_Stamp);
 		});
