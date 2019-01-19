@@ -39,15 +39,19 @@ app.post('/webhook', (req,res) => {
 			let Sender_ID = entry.messaging[0].sender.id;
 			let Time_Stamp = entry.messaging[0].timestamp;
 			let Message = entry.messaging[0].message.text;
-			if(entry.messaging[0].message)
+			if(entry.messaging[0].message.text)
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp)
 				console.log(Message)
 				console.log('_____________________________')
 			}
-			else if(entry.messaging[0].postback)
+			else if(entry.messaging[0].attachment)
 			{
 				console.log(Sender_ID + ' send an attachment on ' + Time_Stamp);
+			}
+			else
+			{
+				console.log(Sender_ID + 'send : ' + entry.messaging[0])
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED')
