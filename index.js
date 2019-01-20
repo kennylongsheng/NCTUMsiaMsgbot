@@ -41,17 +41,17 @@ app.post('/webhook', (req,res) => {
 			if(webhook_event.message&&webhook_event.message.text)
 			{
 				let Message = webhook_event.message.text;
-				//console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
+				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
 				sendText(Sender_ID, Message);
 			}
-			else if(webhook_event.message.attachments[0])
+			else if(webhook_event.message&&webhook_event.message.attachments[0])
 			{
-				//console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
+				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
 			}
 			else
 			{
-				//console.log(Sender_ID + 'send Something');
+				console.log(Sender_ID + 'send Something');
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED');
