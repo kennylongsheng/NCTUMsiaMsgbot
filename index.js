@@ -69,7 +69,7 @@ function sendText(Sender_ID, Send_Message){
 		method: "POST",
 		json:{
 			recipient: {id: Sender_ID},
-			message : {text: Send_Message.message.text},
+			message : {text: 'RECEIVED' },//Send_Message.message.text
 		}
 	},
 	function(err,res,body){
