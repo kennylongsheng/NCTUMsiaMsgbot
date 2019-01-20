@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
-const request = require('request')
+const request = require('request');
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -43,7 +43,7 @@ app.post('/webhook', (req,res) => {
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
-				sendText(Sender_ID, Message)
+				sendText(Sender_ID, Message);
 			}
 			else if(webhook_event.message.attachments[0])
 			{
@@ -51,10 +51,10 @@ app.post('/webhook', (req,res) => {
 			}
 			else
 			{
-				console.log(Sender_ID + 'send Something')
+				console.log(Sender_ID + 'send Something');
 			}
 		});
-		res.status(200).send('EVENT_RECEIVED')
+		res.status(200).send('EVENT_RECEIVED');
 	}
 	else {
 	res.sendStatus(404);
@@ -62,24 +62,26 @@ app.post('/webhook', (req,res) => {
 });
 
 function sendText(Sender_ID, Send_Message){
-/*	request({
+
+	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs : {access_token : PAGE_ACCESS_TOKEN},
 		method: "POST",
 		json:{
 			recipient: {id: Sender_ID},
-			message : {text: Send_Message}
+			message : {text: Send_Message},
 		}
 	},
+	console.log('________________________________________________________');
 	function(err,res,body){
 		if(err)
 		{
-			console.log('Sending Error')
+			console.log('Sending Error');
 		}
 		else if(res.body.err)
 		{
-			console.log('Respond Body Error')
+			console.log('Respond Body Error');
 		}
-	})*/
-};
+	}
+)};
 
