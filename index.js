@@ -38,7 +38,7 @@ app.post('/webhook', (req,res) => {
 			//console.log(webhook_event.message); //PAGE_ID = 235798233272453
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
-			let Message = webhook_event.message.text;
+			let Message = webhook_event.message.text.toString();
 			if(webhook_event.message.text)
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
