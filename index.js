@@ -35,7 +35,7 @@ app.post('/webhook', (req,res) => {
 		body.entry.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
-			//console.log(webhook_event.message); //PAGE_ID = 235798233272453
+			console.log(webhook_event); //PAGE_ID = 235798233272453
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
 			if(webhook_event.message.text)
