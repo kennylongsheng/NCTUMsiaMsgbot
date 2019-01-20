@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const HELP_PTR = fs.readFileSync('/help.txt')
+const HELP_PTR = fs.readFileSync('help.txt')
 
 //////////////////////////////////SETUP WEBHOOK//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
