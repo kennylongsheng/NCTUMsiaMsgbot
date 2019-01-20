@@ -35,14 +35,14 @@ app.post('/webhook', (req,res) => {
 		body.entry.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
-			//console.log(webhook_event.message); //PAGE_ID = 235798233272453
+			console.log(webhook_event.message); //PAGE_ID = 235798233272453
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
 			let Message = webhook_event.message.text;
 			if(webhook_event.message.text)
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
-				console.log(Message);
+				//console.log(Message);
 				sendText(Sender_ID, webhook_event);
 			}
 			else if(webhook_event.message.attachments[0])
