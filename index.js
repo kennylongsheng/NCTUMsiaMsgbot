@@ -72,7 +72,7 @@ function sendText(Sender_ID, Send_Message){
 			message : {text: Send_Message},
 		}
 	},
-	console.log('________________________________________________________');
+	console.log('________________________________________________________')
 	function(err,res,body){
 		if(err)
 		{
@@ -82,6 +82,6 @@ function sendText(Sender_ID, Send_Message){
 		{
 			console.log('Respond Body Error');
 		}
-	}
-)};
+	})
+};
 
