@@ -43,7 +43,7 @@ app.post('/webhook', (req,res) => {
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
-				//sendText(Sender_ID, Message)
+				sendText(Sender_ID, Message)
 			}
 			else if(webhook_event.message.attachments[0])
 			{
@@ -60,9 +60,9 @@ app.post('/webhook', (req,res) => {
 	res.sendStatus(404);
 	}
 });
-/*
+
 function sendText(Sender_ID, Send_Message){
-	request({
+/*	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs : {access_token : PAGE_ACCESS_TOKEN},
 		method: "POST",
@@ -80,6 +80,6 @@ function sendText(Sender_ID, Send_Message){
 		{
 			console.log('Respond Body Error')
 		}
-	})
+	})*/
 };
-*/
+
