@@ -32,7 +32,7 @@ app.post('/webhook', (req,res) => {
 	let body = req.body;
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
-		body.entry.forEach(function(entry)
+		body.entry.message.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
 			console.log(webhook_event); //PAGE_ID = 235798233272453
