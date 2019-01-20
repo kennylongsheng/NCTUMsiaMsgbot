@@ -32,13 +32,13 @@ app.post('/webhook', (req,res) => {
 	let body = req.body;
 	if (body.object === 'page'){
 		// Iterates over each entry - there may be multiple if batched
-		body.entry.messaging.forEach(function(messaging)
+		body.entry.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
 			console.log(webhook_event); //PAGE_ID = 235798233272453
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
-			if(webhook_event.message.text)
+			if(webhook_event.message&&webhook_event.message.text)
 			{
 				let Message = webhook_event.message.text;
 				//console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
