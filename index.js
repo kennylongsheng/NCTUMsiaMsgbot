@@ -30,12 +30,11 @@ app.get('/webhook',(req,res)=>{
 
 app.post('/webhook', (req,res) => {
 	let body = req.body;
-	if (body.object === 'page'){
+	if (body.object === 'page'){ // PAGE_ID = 235798233272453
 		// Iterates over each entry - there may be multiple if batched
 		body.entry.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
-			console.log(webhook_event); //PAGE_ID = 235798233272453
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
 			if(webhook_event.message&&webhook_event.message.text)
@@ -51,7 +50,8 @@ app.post('/webhook', (req,res) => {
 			}
 			else
 			{
-				console.log(Sender_ID + 'send Something');
+				console.log(Sender_ID);
+				console.log(webhook_event);				
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED');
