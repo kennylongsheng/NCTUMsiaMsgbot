@@ -1,0 +1,11 @@
+*** HELP
+* Query Phone No.
+number <NAME>
+Ex: number kenny , number jiaoma
+
+* Insert Phone No.
+insert <Year> <NAME> <PHONE NO.> 
+EX: insert 109 kenny 09012345 
+
+* Help
+help

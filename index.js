@@ -4,10 +4,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
 const request = require('request');
+const fs = require('fs');
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const HELP_PTR = fs.readFileSync('/help.txt')
 
+//////////////////////////////////SETUP WEBHOOK//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
 app.get('/webhook',(req,res)=>{
@@ -26,7 +29,7 @@ app.get('/webhook',(req,res)=>{
 	}
 });
 
-//////////////////////////////////WEBHOOKDEPLOYED//////////////////////////////////////////////////
+//////////////////////////////////Receive Message Data//////////////////////////////////////////////////
 
 app.post('/webhook', (req,res) => {
 	let body = req.body;
@@ -36,22 +39,25 @@ app.post('/webhook', (req,res) => {
 		{
 			let webhook_event = entry.messaging[0];
 			let Sender_ID = webhook_event.sender.id;
-			let Time_Stamp = webhook_event.timestamp;
+			// Received Text
 			if(webhook_event.message&&webhook_event.message.text)
 			{
 				let Message = webhook_event.message.text;
-				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
+				console.log(Sender_ID + ' send a text message');
 				console.log(Message);
-				sendText(Sender_ID, Message);
+				sendAPI(Sender_ID, Message);
 			}
+			// Received Attachement
 			else if(webhook_event.message&&webhook_event.message.attachments[0])
 			{
-				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
+				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type);
+				let Message = "You've Sent An Attachment";
+				sendAPI(Sender_ID, Message);
 			}
+			// POSTBACK Things
 			else
 			{
-				console.log(Sender_ID);
-				console.log(webhook_event);				
+				//console.log(webhook_event);				
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED');
@@ -61,15 +67,15 @@ app.post('/webhook', (req,res) => {
 	}
 });
 
-function sendText(Sender_ID, Send_Message){
-
+//////////////////////////////////Send API//////////////////////////////////////////////////
+function sendAPI(Sender_ID, Send_Message){
 	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs : {access_token : PAGE_ACCESS_TOKEN},
 		method: "POST",
 		json:{
 			recipient: {id: Sender_ID},
-			message : {text: Send_Message},
+			message : {text: HELP_PTR},
 		}
 	},
 	function(err,res,body){
@@ -84,3 +90,7 @@ function sendText(Sender_ID, Send_Message){
 	})
 };
 
+//////////////////////////////////Message Distinguish//////////////////////////////////////////////////
+function separateMsg(Sender_ID, Message_Input){
+
+}
