@@ -72,8 +72,8 @@ function sendText(Sender_ID, Send_Message){
 			message : {text: Send_Message},
 		}
 	},
-	console.log('________________________________________________________')
 	function(err,res,body){
+		console.log('________________________________________________________');
 		if(err)
 		{
 			console.log('Sending Error');
