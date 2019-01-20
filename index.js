@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const HELP_PTR = fs.readFileSync('help.txt')
+const HELP_PTR = fs.readFileSync('help.txt','utf8')
 console.log(HELP_PTR);
 
 //////////////////////////////////SETUP WEBHOOK//////////////////////////////////////////////////
