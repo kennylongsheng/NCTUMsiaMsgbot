@@ -43,6 +43,7 @@ app.post('/webhook', (req,res) => {
 			{
 				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
 				console.log(Message);
+				sendText(Sender_ID, Message)
 			}
 			else if(webhook_event.message.attachments[0])
 			{
@@ -67,7 +68,7 @@ function sendText(Sender_ID, Send_Message){
 		method: "POST",
 		json:{
 			recipient: {id: Sender_ID},
-			message : Send_Message
+			message : {text: Send_Message}
 		}
 	},
 	function(err,res,body){
