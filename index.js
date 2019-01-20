@@ -35,23 +35,25 @@ app.post('/webhook', (req,res) => {
 		body.entry.forEach(function(entry)
 		{
 			let webhook_event = entry.messaging[0];
+			console.log('CHECK')
 			console.log(webhook_event.message); //PAGE_ID = 235798233272453
+			console.log('CHECK END')
 			let Sender_ID = webhook_event.sender.id;
 			let Time_Stamp = webhook_event.timestamp;
 			let Message = webhook_event.message.text;
 			if(webhook_event.message.text)
 			{
-				console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
-				//console.log(Message);
+				//console.log(Sender_ID + ' send a text message on ' + Time_Stamp);
+				console.log(Message);
 				sendText(Sender_ID, webhook_event);
 			}
 			else if(webhook_event.message.attachments[0])
 			{
-				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
+				//console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type + ' on ' + Time_Stamp);
 			}
 			else
 			{
-				console.log(Sender_ID + 'send Something');
+				//console.log(Sender_ID + 'send Something');
 			}
 		});
 		res.status(200).send('EVENT_RECEIVED');
@@ -69,11 +71,10 @@ function sendText(Sender_ID, Send_Message){
 		method: "POST",
 		json:{
 			recipient: {id: Sender_ID},
-			message : {text: 'RECEIVED' },//Send_Message.message.text
+			message : {text: Send_Message.message.text },//
 		}
 	},
 	function(err,res,body){
-		console.log('________________________________________________________');
 		if(err)
 		{
 			console.log('Sending Error');
