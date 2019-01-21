@@ -99,13 +99,13 @@ function separateMsg(Sender_ID, Message_Input){
 	if(Message_Input.includes("number")){
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		Message_Input = "Query Number of " + queryName;
-		console.log("Type of queryName" + typeof (queryName));
 	}
 	else if (Message_Input.includes("insert")){
 		let queryYear = Number(Message_Array[Message_Array.indexOf("insert") + 1]);
 		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
 		let queryPhone = Number(Message_Array[Message_Array.indexOf("insert") + 3]);
 		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
+		// Check Query Error
 		If(queryYear=="NaN" || queryPhone=="NaN"){
 			console.log("Type Error!")
 			Query_Type_Correct = false;
@@ -120,7 +120,7 @@ function separateMsg(Sender_ID, Message_Input){
 	console.log("Message Send: " + Message_Input);
 	// Check Query Error
 
-	if(Message_Input.includes("undefined") || Query_Type_Correct === false){
+	if(Message_Input.includes("undefined") || Query_Type_Correct == false){
 		sendAPI(Sender_ID, "Query Error!");
 		sendAPI(Sender_ID, "Type \"help\" to check Instruction.");
 	}
