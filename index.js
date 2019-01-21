@@ -8,9 +8,9 @@ const fs = require('fs');
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const HELP_PTR = fs.readFileSync('help.txt','utf8')
+const HELP_PTR = fs.readFileSync('/txt/help.txt','utf8')
 
-//////////////////////////////////SETUP WEBHOOK//////////////////////////////////////////////////
+//////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
 app.get('/webhook',(req,res)=>{
@@ -42,7 +42,7 @@ app.post('/webhook', (req,res) => {
 			// Received Text
 			if(webhook_event.message&&webhook_event.message.text)
 			{
-				let Message = webhook_event.message.text;
+				let Message = webhook_event.message.text.toLowerCase();
 				console.log(Sender_ID + ' send a text message');
 				console.log(Message);
 				sendAPI(Sender_ID, Message);
@@ -68,7 +68,7 @@ app.post('/webhook', (req,res) => {
 	}
 });
 
-//////////////////////////////////Send API//////////////////////////////////////////////////
+//////////////////////////////////Send API--Don't Change//////////////////////////////////////////////////
 function sendAPI(Sender_ID, Send_Message){
 
 	request({
@@ -94,6 +94,5 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
-	let Message_Output = HELP_PTR;
-	sendAPI(Sender_ID, Message_Output);
+	sendAPI(Sender_ID,HELP_PTR)
 }
