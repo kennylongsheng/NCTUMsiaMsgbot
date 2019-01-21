@@ -112,11 +112,10 @@ function separateMsg(Sender_ID, Message_Input){
 	else{
 		Message_Input = "Type \"help\" to check Instruction.";
 	}
-	console.log(Message_Input);
+	console.log("Message Send: " + Message_Input);
 	if(Message_Input.includes("undefined")){
-		console.log("Query Error!");
 		sendAPI(Sender_ID, "Query Error!");
-		sendAPI(Sender_ID, HELP_PTR);
+		sendAPI(Sender_ID, "Type \"help\" to check Instruction.");
 	}
 	else{
 		sendAPI(Sender_ID, Message_Input);
