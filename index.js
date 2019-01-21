@@ -115,6 +115,9 @@ function separateMsg(Sender_ID, Message_Input){
 		sendAPI(Sender_ID,Message_Input);
 	}
 	*/
+	console.log(Message_Array);
+	console.log(Function_Array);
+	console.log(Function_Index);
 	switch(Function_Index){
 		case 0:
 			let Name = Message_Array[1];
@@ -132,5 +135,6 @@ function separateMsg(Sender_ID, Message_Input){
 		default:
 			Message_Input = "Type \"help\" to check Instruction.";
 	}
+	console.log(Message_Input);
 	sendAPI(Sender_ID, Message_Input);
 }
