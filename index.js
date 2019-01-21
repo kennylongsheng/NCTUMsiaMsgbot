@@ -106,7 +106,7 @@ function separateMsg(Sender_ID, Message_Input){
 		let queryPhone = Number(Message_Array[Message_Array.indexOf("insert") + 3]);
 		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
 		// Check Query Error
-		If(queryYear=="NaN" || queryPhone=="NaN"){
+		if(queryYear=="NaN" || queryPhone=="NaN"){
 			console.log("Type Error!")
 			Query_Type_Correct = false;
 		}
