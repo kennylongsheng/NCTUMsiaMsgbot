@@ -44,7 +44,7 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(Sender_ID + ' send a text message');
-				console.log(Message);
+				//console.log(Message);
 				//sendAPI(Sender_ID, Message);
 				separateMsg(Sender_ID,Message);
 			}
@@ -94,10 +94,14 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
+	console.log(Message_Input);
 	let Message_Array = Message_Input.split(" ");
 	let Function_Array = ["number","insert","help"]
 	let Function_Index = Function_Array.indexOF(Message_Array[0])
 	console.log(Function_Array[Function_Index])
+	console.log(Message_Array);
+	console.log(Function_Array);
+	console.log(Function_Index);
 	/*
 	if(Message_Input.includes("number")){
 		let Name = Query_Array[Query_Array.indexOF("number")];
@@ -115,9 +119,6 @@ function separateMsg(Sender_ID, Message_Input){
 		sendAPI(Sender_ID,Message_Input);
 	}
 	*/
-	console.log(Message_Array);
-	console.log(Function_Array);
-	console.log(Function_Index);
 	switch(Function_Index){
 		case 0:
 			let Name = Message_Array[1];
