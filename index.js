@@ -6,9 +6,11 @@ const app = express().use(bodyParser.json()); // Creates express http server
 const request = require('request');
 const fs = require('fs');
 
+// SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
+const HOST_PSID = 1491653584230056;
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -34,8 +36,7 @@ app.get('/webhook',(req,res)=>{
 app.post('/webhook', (req,res) => {
 	let body = req.body;
 	if (body.object === 'page'){ // PAGE_ID = 235798233272453
-		// Iterates over each entry - there may be multiple if batched
-		body.entry.forEach(function(entry)
+		body.entry.forEach(function(entry) // Iterates over each entry - there may be multiple if batched
 		{
 			let webhook_event = entry.messaging[0];
 			let Sender_ID = webhook_event.sender.id;
@@ -43,8 +44,7 @@ app.post('/webhook', (req,res) => {
 			if(webhook_event.message&&webhook_event.message.text)
 			{
 				let Message = webhook_event.message.text.toLowerCase();
-				console.log(Sender_ID + ' send a text message');
-				//console.log(Message);
+				console.log(Sender_ID + '->send a text message');
 				separateMsg(Sender_ID,Message);
 			}
 			// Received Attachement
@@ -95,34 +95,38 @@ function sendAPI(Sender_ID, Send_Message){
 function separateMsg(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
+
 	// PRIORITY :  number > insert > help
-	if(Message_Input.includes("number")){
+	// number <Name>
+	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		Message_Input = "Query Number of " + queryName;
-	}
-	else if (Message_Input.includes("insert")){
+	} 
+	// insert <Year> <Name> <PhoneNo.>
+	else if (Message_Input.includes("insert")){ 
 		let queryYear = Number(Message_Array[Message_Array.indexOf("insert") + 1]);
 		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
 		let queryPhone = Number(Message_Array[Message_Array.indexOf("insert") + 3]);
-		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
-		// Check Query Error
+		// Check Query Error 
+		// queryYear and queryPhone will become NaN when convert to number
 		if(isNaN(queryYear) || isNaN(queryPhone)){
-			console.log("Type Error!")
 			Query_Type_Correct = false;
+		}
+		else{
+			Message_Input = "Insert Number of " + queryYear + " " + queryName + " " + queryPhone;
 		}
 	}
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
 	}
 	else{
-		Message_Input = "Type \"help\" to check Instruction.";
+		Query_Type_Correct = false;
 	}
 	console.log("Message Send: " + Message_Input);
-	// Check Query Error
 
-	if(Message_Input.includes("undefined") || Query_Type_Correct == false){
-		sendAPI(Sender_ID, "Query Error!");
-		sendAPI(Sender_ID, "Type \"help\" to check Instruction.");
+	// Check Query Error
+	if(Query_Type_Correct == false || Message_Input.includes("undefined")){
+		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
 	}
 	else{
 		sendAPI(Sender_ID, Message_Input);
