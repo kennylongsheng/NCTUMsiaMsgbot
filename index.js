@@ -99,13 +99,13 @@ function separateMsg(Sender_ID, Message_Input){
 	console.log(Message_Array);
 	
 	if(Message_Input.includes("number")){
-		let qName = Message_Array[Message_Array.indexOF("number") + 1];
+		let qName = Message_Array[Message_Array.indexOf("number") + 1];
 		Message_Input = "Query Number of " + qName;
 	}
 	else if (Message_Input.includes("insert")){
-		let qYear = Message_Array[Message_Array.indexOF("insert") + 1];
-		let qName = Message_Array[Message_Array.indexOF("insert") + 2];
-		let qPhone = Message_Array[Message_Array.indexOF("insert") + 3];
+		let qYear = Message_Array[Message_Array.indexOf("insert") + 1];
+		let qName = Message_Array[Message_Array.indexOf("insert") + 2];
+		let qPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		Message_Input = "Insert Number of " + qYear + qName + qPhone;
 	}
 	else if(Message_Input.includes("help")){
