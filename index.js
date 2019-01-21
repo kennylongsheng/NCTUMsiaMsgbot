@@ -116,7 +116,7 @@ function separateMsg(Sender_ID, Message_Input){
 	if(Message_Input.includes("undefined")){
 		console.log("Query Error!");
 		sendAPI(Sender_ID, "Query Error!");
-		sendAPI(Send_Message,HELP_PTR);
+		sendAPI(Sender_ID, HELP_PTR);
 	}
 	else{
 		sendAPI(Sender_ID, Message_Input);
