@@ -94,15 +94,43 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
-	if(Message_Input.includes('number')){
-		Message_Input = "Query Number";
+	let Message_Array = Message_Input.split(" ");
+	let Function_Array = ["number","insert","help"]
+	let Function_Index = Function_Array.indexOF(Message_Array[0])
+	console.log(Function_Array[Function_Index])
+	/*
+	if(Message_Input.includes("number")){
+		let Name = Query_Array[Query_Array.indexOF("number")];
+		Message_Input = "Query Number of " + Name;
 		sendAPI(Sender_ID,Message_Input);
 	}
-	else if (Message_Input.includes('insert')){
+	else if (Message_Input.includes("insert")){
 		Message_Input = "Insert Number";
 		sendAPI(Sender_ID,Message_Input);
 	}
-	else if(Message_Input.includes('help')){
+	else if(Message_Input.includes("help")){
 		sendAPI(Sender_ID,HELP_PTR);
 	}
+	else{
+		sendAPI(Sender_ID,Message_Input);
+	}
+	*/
+	switch(Function_Index){
+		case 0:
+			let Name = Message_Array[1];
+			Message_Input = "Query Number of " + Name;
+			break;
+		case 1:
+			let Year = Message_Array[1];
+			let Name = Message_Array[2];
+			let Phone = Message_Array[3];
+			Message_Input = "Insert Number of " + Year + Name + Phone;
+			break;
+		case 2:
+			Message_Input = HELP_PTR;
+			break;
+		default:
+			Message_Input = "Type \"help\" to check Instruction.";
+	}
+	sendAPI(Sender_ID, Message_Input);
 }

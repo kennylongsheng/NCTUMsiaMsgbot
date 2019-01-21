@@ -1,11 +1,7 @@
-*** HELP
-* Query Phone No.
 number <NAME>
 Ex: number daddy
 
-* Insert Phone No.
 insert <Year> <NAME> <PHONE NO.> 
-EX: insert 109 daddy 0987654321 
+Ex: insert 109 daddy 0987654321 
 
-* Help
 help
