@@ -111,8 +111,11 @@ function separateMsg(Sender_ID, Message_Input){
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
 	}
+	else if(Message_Input.includes("你好")){
+		Message_Input = "中文可以顯示耶！";
+	}
 	else{
-		Message_Input = "Type \"help\" to check Instruction.中文可以顯示嗎？";
+		Message_Input = "Type \"help\" to check Instruction.";
 	}
 	console.log(Message_Input);
 	sendAPI(Sender_ID, Message_Input);
