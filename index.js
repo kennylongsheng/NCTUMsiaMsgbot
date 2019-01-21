@@ -106,9 +106,9 @@ function separateMsg(Sender_ID, Message_Input){
 		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
-		console.log("Type of queryYear" + typeof (queryYear));
-		console.log("Type of queryName" + typeof (queryName));
-		console.log("Type of queryPhone" + typeof (queryPhone));
+		console.log("Type of queryYear " + Number(queryYear) + " " + typeof (Number(queryYear));
+		console.log("Type of queryName " + queryName + " " + typeof (queryName));
+		console.log("Type of queryPhone " + Number(queryPhone) + " " + typeof (Number(queryPhone)));
 	}
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
