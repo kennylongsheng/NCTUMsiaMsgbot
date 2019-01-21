@@ -9,7 +9,6 @@ const fs = require('fs');
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const HELP_PTR = fs.readFileSync('help.txt','utf8')
-console.log(HELP_PTR);
 
 //////////////////////////////////SETUP WEBHOOK//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -47,6 +46,7 @@ app.post('/webhook', (req,res) => {
 				console.log(Sender_ID + ' send a text message');
 				console.log(Message);
 				sendAPI(Sender_ID, Message);
+				separateMsg(Sender_ID,Message);
 			}
 			// Received Attachement
 			else if(webhook_event.message&&webhook_event.message.attachments[0])
@@ -94,5 +94,6 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
-
+	let Message_Output = HELP_PTR;
+	sendAPI(Sender_ID, Message_Output);
 }
