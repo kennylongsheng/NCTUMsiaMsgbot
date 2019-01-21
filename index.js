@@ -94,17 +94,21 @@ function sendAPI(Sender_ID, Send_Message){
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
-
+	let Query_Type_Correct = true;
 	// PRIORITY :  number > insert > help
 	if(Message_Input.includes("number")){
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		Message_Input = "Query Number of " + queryName;
+		console.log("Type of queryName" + typeof queryName);
 	}
 	else if (Message_Input.includes("insert")){
 		let queryYear = Message_Array[Message_Array.indexOf("insert") + 1];
 		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
+		console.log("Type of queryYear" + typeof queryYear);
+		console.log("Type of queryName" + typeof queryName);
+		console.log("Type of queryPhone" + typeof queryPhone);
 	}
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
@@ -113,6 +117,8 @@ function separateMsg(Sender_ID, Message_Input){
 		Message_Input = "Type \"help\" to check Instruction.";
 	}
 	console.log("Message Send: " + Message_Input);
+	// Check Query Error
+
 	if(Message_Input.includes("undefined")){
 		sendAPI(Sender_ID, "Query Error!");
 		sendAPI(Sender_ID, "Type \"help\" to check Instruction.");
