@@ -45,7 +45,6 @@ app.post('/webhook', (req,res) => {
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(Sender_ID + ' send a text message');
 				//console.log(Message);
-				//sendAPI(Sender_ID, Message);
 				separateMsg(Sender_ID,Message);
 			}
 			// Received Attachement
@@ -95,7 +94,6 @@ function sendAPI(Sender_ID, Send_Message){
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
-	//console.log(Message_Array);
 
 	// PRIORITY :  number > insert > help
 	if(Message_Input.includes("number")){
@@ -111,12 +109,16 @@ function separateMsg(Sender_ID, Message_Input){
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
 	}
-	else if(Message_Input.includes("你好")){
-		Message_Input = "中文可以顯示耶！";
-	}
 	else{
 		Message_Input = "Type \"help\" to check Instruction.";
 	}
 	console.log(Message_Input);
-	sendAPI(Sender_ID, Message_Input);
+	if(Message_Input.includes("undefined")){
+		console.log("Query Error!");
+		sendAPI(Sender_ID, "Query Error!");
+		sendAPI(Send_Message,HELP_PTR);
+	}
+	else{
+		sendAPI(Sender_ID, Message_Input);
+	}
 }

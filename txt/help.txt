@@ -1,7 +1,14 @@
-number <NAME>
-Ex: number daddy
+// help.txt
+===========================================
 
-insert <Year> <NAME> <PHONE NO.> 
-Ex: insert 109 daddy 0987654321 
+* Search for someone's phone number.
+-> number <NAME>
 
-help
+* Insert someone's phone number and name.
+-> insert <Year> <NAME> <PHONE NO> 
+
+*Asking for help.
+-> help
+
+===========================================
+// end of file
