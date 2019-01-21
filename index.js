@@ -94,25 +94,25 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
-	console.log(Message_Input);
 	let Message_Array = Message_Input.split(" ");
-	console.log(Message_Array);
-	
+	//console.log(Message_Array);
+
+	// PRIORITY :  number > insert > help
 	if(Message_Input.includes("number")){
-		let qName = Message_Array[Message_Array.indexOf("number") + 1];
-		Message_Input = "Query Number of " + qName;
+		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
+		Message_Input = "Query Number of " + queryName;
 	}
 	else if (Message_Input.includes("insert")){
-		let qYear = Message_Array[Message_Array.indexOf("insert") + 1];
-		let qName = Message_Array[Message_Array.indexOf("insert") + 2];
-		let qPhone = Message_Array[Message_Array.indexOf("insert") + 3];
-		Message_Input = "Insert Number of " + qYear + qName + qPhone;
+		let queryYear = Message_Array[Message_Array.indexOf("insert") + 1];
+		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
+		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
+		Message_Input = "Insert Number of " + queryYear + queryName + queryPhone;
 	}
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
 	}
 	else{
-		Message_Input = "Type \"help\" to check Instruction.";
+		Message_Input = "Type \"help\" to check Instruction.中文可以顯示嗎？";
 	}
 	console.log(Message_Input);
 	sendAPI(Sender_ID, Message_Input);
