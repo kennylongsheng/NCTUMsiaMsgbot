@@ -45,7 +45,7 @@ app.post('/webhook', (req,res) => {
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(Sender_ID + ' send a text message');
 				console.log(Message);
-				sendAPI(Sender_ID, Message);
+				//sendAPI(Sender_ID, Message);
 				separateMsg(Sender_ID,Message);
 			}
 			// Received Attachement
@@ -94,5 +94,15 @@ function sendAPI(Sender_ID, Send_Message){
 
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 function separateMsg(Sender_ID, Message_Input){
-	sendAPI(Sender_ID,HELP_PTR)
+	if(Message_Input.includes('number')){
+		Message_Input = "Query Number";
+		sendAPI(Sender_ID,Message_Input);
+	}
+	else if (Message_Input.includes('insert')){
+		Message_Input = "Insert Number";
+		sendAPI(Sender_ID,Message_Input);
+	}
+	else if(Message_Input.includes('help')){
+		sendAPI(Sender_ID,HELP_PTR);
+	}
 }
