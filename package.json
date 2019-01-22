@@ -17,6 +17,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "mongodb": "^3.1.12",
     "request": "^2.88.0"
   }
 }

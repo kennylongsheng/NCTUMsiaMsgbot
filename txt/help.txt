@@ -1,5 +1,4 @@
 // help.txt
-===========================================
 
 * Search for someone's phone number.
 -> number <NAME>
@@ -10,5 +9,4 @@
 *Asking for help.
 -> help
 
-===========================================
 // end of file
