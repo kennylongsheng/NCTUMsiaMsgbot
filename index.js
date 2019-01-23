@@ -10,7 +10,7 @@ const fs = require('fs');
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
-const HOST_PSID = 1491653584230056;
+const KennyPSID = process.env.KENNYPSID;
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -104,17 +104,22 @@ function separateMsg(Sender_ID, Message_Input){
 	} 
 	// insert <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
-		let queryYear = Number(Message_Array[Message_Array.indexOf("insert") + 1]);
+		let queryYear = Message_Array[Message_Array.indexOf("insert") + 1];
 		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
-		let queryPhone = Number(Message_Array[Message_Array.indexOf("insert") + 3]);
+		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		// Check Query Error 
 		// queryYear and queryPhone will become NaN when convert to number
-		if(isNaN(queryYear) || isNaN(queryPhone)){
+		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){
 			Query_Type_Correct = false;
 		}
 		else{
 			Message_Input = "Insert Number of " + queryYear + " " + queryName + " " + queryPhone;
 		}
+	}
+	else if(Message_Array.length == 1 && Message_Array[0] === "request"){
+		let message_admin = "Someone Request!";
+		sendAPI(KennyPSID,message_admin);
+		Message_Input = "Request Sent! Please Wait For Approval.";
 	}
 	else if(Message_Input.includes("help")){
 		Message_Input = HELP_PTR;
@@ -122,7 +127,7 @@ function separateMsg(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	console.log("Message Send: " + Message_Input);
+	console.log("Message Send-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false || Message_Input.includes("undefined")){
