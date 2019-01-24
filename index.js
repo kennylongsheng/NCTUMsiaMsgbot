@@ -18,7 +18,7 @@ const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
 // "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
 function connectDB(){
-	mongoClient.connect(MLABURI,function(err,client){
+	mongoClient.connect(MlabURI,function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
