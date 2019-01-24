@@ -15,7 +15,7 @@ const MLabAPI = process.env.MLABAPI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
 //////////////////////////////////SETUP DB//////////////////////////////////////////////////
-mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds147421.mlab.com:47421/nctumycommunity" , function(err){
+mongoose.connect("mongodb://kennylongsheng:bottol1996@@ds147421.mlab.com:47421/nctumycommunity" , function(err){
 	if(err){
 		console.error(err);
 	}
