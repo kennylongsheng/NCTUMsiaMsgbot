@@ -22,13 +22,12 @@ function connectDB(){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
+		
 		db.collection('whitelist').insertOne({
 			name: "Chua",
 			age: 20,
 			job: "HouseWife"
-		}).then(result){
-			console.log("InsertComplete")
-		}
+		})
 
 		client.close();
 	})
