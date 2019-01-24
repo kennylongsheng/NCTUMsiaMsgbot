@@ -5,12 +5,25 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
 const request = require('request');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 const KennyPSID = process.env.KENNYPSID;
+const MLabAPI = process.env.MLABAPI;
+const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
+
+//////////////////////////////////SETUP DB//////////////////////////////////////////////////
+mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds147421.mlab.com:47421/nctumycommunity" , function(err){
+	if(err){
+		console.error(err);
+	}
+	else{
+		console.log("MongoConnected");
+	}
+});
+
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));

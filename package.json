@@ -18,6 +18,7 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "mongodb": "^3.1.12",
+    "mongoose": "^5.4.6",
     "request": "^2.88.0"
   }
 }
