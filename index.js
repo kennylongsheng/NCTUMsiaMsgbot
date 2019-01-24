@@ -23,11 +23,8 @@ function connectDB(){
 
 		const db = client.db("nctumycommunity");
 		
-		db.collection('whitelist').insertOne({
-			name: "Chua",
-			age: 20,
-			job: "HouseWife"
-		})
+		var collectionData = db.collection('whitelist').find();
+		console.log(collectionData);
 
 		client.close();
 	})
