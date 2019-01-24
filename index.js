@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
 const request = require('request');
 const fs = require('fs');
-const assert = requier('assert');
+const assert = require('assert');
 const mongoClient = require('mongodb').MongoClient;
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
