@@ -5,25 +5,34 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // Creates express http server
 const request = require('request');
 const fs = require('fs');
-const mongoose = require('mongoose');
+const assert = requier('assert');
+const mongoClient = require('mongodb').MongoClient;
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const KennyPSID = process.env.KENNYPSID;
-const MLabAPI = process.env.MLABAPI;
+const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
-//////////////////////////////////SETUP DB//////////////////////////////////////////////////
-mongoose.connect("mongodb://kennylongsheng:1996bottol0412@ds147421.mlab.com:47421/nctumycommunity" , function(err){
-	if(err){
-		console.error(err);
-	}
-	else{
-		console.log("MongoConnected");
-	}
-});
+//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
+// "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
+function connectDB(){
+	mongoClient.connect(MLABURI,function(err,client){
+		assert.equal(null, err);
 
+		const db = client.db("nctumycommunity");
+		db.collection('whitelist').insertOne({
+			name: "Chua",
+			age: 20,
+			job: "HouseWife"
+		}).then(result){
+			console.log("InsertComplete")
+		}
+
+		client.close();
+	})
+};
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -122,6 +131,7 @@ function separateMsg(Sender_ID, Message_Input){
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		// Check Query Error 
 		// queryYear and queryPhone will become NaN when convert to number
+		connectDB();
 		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){
 			Query_Type_Correct = false;
 		}
