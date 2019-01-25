@@ -185,4 +185,4 @@ function queryDB(qname){
 			console.log(err);
 		});	
 	return (Message_Input);
-};
+});
