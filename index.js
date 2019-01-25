@@ -150,7 +150,6 @@ function insertDB(qcourse, qyear, qname, qphoneno){
 };
 
 function queryDB(qname){
-	var message = "Couldn't find this person!";
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -158,13 +157,8 @@ function queryDB(qname){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
-			console.log("MessageTemp -> " + msg_TEMP);
-			if(msg_TEMP.includes("undefined") == false){
-				message = msg_TEMP;
-			}
+			return (JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno));
 		},
 		function(err){/*console.log(err);*/});
 	});
-	return message;
 };
