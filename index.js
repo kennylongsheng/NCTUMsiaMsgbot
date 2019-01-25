@@ -125,7 +125,7 @@ function distinguishMSG(Sender_ID, Message_Input){
 	console.log("Message Reply-> " + Message_Input);
 
 	// Check Query Error
-	if(Query_Type_Correct == false || Message_Input.includes("undefined")){
+	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
 		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
 		Query_Type_Correct = true;
 	}
