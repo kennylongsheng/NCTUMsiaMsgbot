@@ -30,19 +30,17 @@ function connectDB(){
 		}
 
 		function errorFunc(error) {
-			console.log("DOC:"+doc);
 		   	console.log(error);
 		}
 
-		cursor.forEach(iterateFunc, errorFunc);
-		fs.writeFile("/testing.txt", cursor, function(err) {
-		    if(err) {
-		        return console.log(err);
-		    }
-
-		    console.log("The file was saved!");
-		}); 
-
+		cursor.forEach(function(doc){
+			console.log(cursor.name);
+			console.log(cursor.age);
+			console.log(cursor.job);
+		}, 
+		function(err){
+			console.log(err);
+		});
 		//test end
 		client.close();
 	})
