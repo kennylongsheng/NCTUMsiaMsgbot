@@ -15,6 +15,39 @@ const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
+//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
+// mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
+function insertDB(qcourse, qyear, qname, qphoneno){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		db.collection('info').insertOne({
+			"course": qcourse,
+			"year": qyear,
+			"name": qname,
+			"phoneno": qphoneno
+		});
+		client.close();
+	})
+};
+
+function queryDB(qname){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
+
+		cursor.forEach(function(doc){
+			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
+			console.log("Message ->" + JSON.stringify(message));
+			return (JSON.stringify(message));
+		},
+		function(err){/*console.log(err);*/});
+	});
+};
+
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
@@ -83,7 +116,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-async function distinguishMSG(Sender_ID, Message_Input){
+function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -91,7 +124,7 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = await queryDB(queryName);
+		let msg_ADD = queryDB(queryName);
 		console.log("Msg ADD -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
@@ -131,40 +164,3 @@ async function distinguishMSG(Sender_ID, Message_Input){
 		sendAPI(Sender_ID, Message_Input);
 	}
 }
-
-//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
-// mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-function insertDB(qcourse, qyear, qname, qphoneno){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
-		assert.equal(null, err);
-
-		const db = client.db("nctumycommunity");
-		db.collection('info').insertOne({
-			"course": qcourse,
-			"year": qyear,
-			"name": qname,
-			"phoneno": qphoneno
-		});
-		client.close();
-	})
-};
-
-function queryDB(qname){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
-		assert.equal(null, err);
-
-		const db = client.db("nctumycommunity");
-		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
-
-		cursor.forEach(function(doc){
-			let message = (doc.course)+(doc.year)+(doc.name)+(doc.phoneno);
-			console.log("Message ->" + JSON.stringify(message));
-			return new Promise(resolve => {
-				setTimeout(()=>{
-					resolve(JSON.stringify(message));
-				}, 200);
-			});
-		},
-		function(err){/*console.log(err);*/});
-	});
-};
