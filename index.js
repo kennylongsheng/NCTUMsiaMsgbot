@@ -83,7 +83,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-async function distinguishMSG(Sender_ID, Message_Input){
+function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -159,8 +159,8 @@ function queryDB(qname){
 
 		cursor.forEach(function(doc){
 			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
-			console.log("CHECK-> "+msg_TEMP);
-			if(!msg_TEMP.includes("undefined")){
+			console.log("MessageTemp -> " + msg_TEMP);
+			if(msg_TEMP.includes("undefined") == false){
 				message = msg_TEMP;
 			}
 		},
