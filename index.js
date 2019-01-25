@@ -136,24 +136,6 @@ function distinguishMSG(Sender_ID, Message_Input){
 
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
 // mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-function connectDB(){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true },function(err,client){
-		assert.equal(null, err);
-		const db = client.db("nctumycommunity");
-		
-		var cursor = db.collection('testdb').find().sort({age : 1});
-		//test
-		cursor.forEach(function(doc){
-			console.log(JSON.stringify(doc));
-		}, 
-		function(err){
-			console.log(err);
-		});
-		//test end
-		client.close();
-	})
-};
-
 function insertDB(qcourse, qyear, qname, qphoneno){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
@@ -170,7 +152,7 @@ function insertDB(qcourse, qyear, qname, qphoneno){
 };
 
 function queryDB(qname){
-	let message = "Couldn't find this person!";
+	var message = "Couldn't find this person!";
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -179,7 +161,7 @@ function queryDB(qname){
 
 		cursor.forEach(function(doc){
 			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
-			console.log("TEMP CHECK -> " + message);
+			console.log("TEMP CHECK -> " + msg_TEMP);
 			if(!msg_TEMP.includes("undefined")){
 				message = msg_TEMP;
 			}
