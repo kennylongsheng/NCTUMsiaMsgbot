@@ -34,9 +34,9 @@ function connectDB(){
 		}
 
 		cursor.forEach(function(doc){
-			console.log(cursor.name);
-			console.log(cursor.age);
-			console.log(cursor.job);
+			console.log(JSON.stringify(cursor.name));
+			console.log(JSON.stringify(cursor.age));
+			console.log(JSON.stringify(cursor.job));
 		}, 
 		function(err){
 			console.log(err);
