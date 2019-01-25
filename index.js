@@ -23,10 +23,10 @@ function connectDB(){
 
 		const db = client.db("nctumycommunity");
 		
-		var cursor = db.collection('whitelist').find();
+		var cursor = db.collection('whitelist').find().sort({age : 1});
 		//test
 		cursor.forEach(function(doc){
-			console.log(JSON.stringify(doc.name));
+			console.log(JSON.stringify(doc));
 		}, 
 		function(err){
 			console.log(err);
