@@ -174,10 +174,8 @@ function queryDB(qname){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let message = "";
+		let message = "Couldn't find this person!";
 		let cursor = db.collection('info').find({"name":qname}).sort({couser: 1, year: 1});
-
-		console.log("TEST -> \n"+JSON.stringify(cursor)); // TEST
 		
 		cursor.forEach(function(doc){
 			console.log(JSON.stringify(doc.name));
