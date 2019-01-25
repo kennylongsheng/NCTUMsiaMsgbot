@@ -157,7 +157,7 @@ async function queryDB(qname){
 
 		cursor.forEach(function(doc){
 			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
-			console.log("TEMP CHECK -> " + msg_TEMP);
+			console.log(typeof(msg_TEMP));
 			if(!msg_TEMP.includes("undefined")){
 				message = msg_TEMP;
 			}
