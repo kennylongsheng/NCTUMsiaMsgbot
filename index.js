@@ -15,30 +15,9 @@ const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
-//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
-// "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-function connectDB(){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true },function(err,client){
-		assert.equal(null, err);
-
-		const db = client.db("nctumycommunity");
-		
-		var cursor = db.collection('whitelist').find().sort({age : 1});
-		//test
-		cursor.forEach(function(doc){
-			console.log(JSON.stringify(doc));
-		}, 
-		function(err){
-			console.log(err);
-		});
-		//test end
-		client.close();
-	})
-};
-
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
-connectDB();  //////// TEST
+
 app.get('/webhook',(req,res)=>{
 	let mode = req.query['hub.mode'];
 	let token = req.query['hub.verify_token'];
@@ -161,3 +140,24 @@ function separateMsg(Sender_ID, Message_Input){
 		sendAPI(Sender_ID, Message_Input);
 	}
 }
+
+//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
+// "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
+function connectDB(){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true },function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		
+		var cursor = db.collection('testdb').find().sort({age : 1});
+		//test
+		cursor.forEach(function(doc){
+			console.log(JSON.stringify(doc));
+		}, 
+		function(err){
+			console.log(err);
+		});
+		//test end
+		client.close();
+	})
+};
