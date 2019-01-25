@@ -156,7 +156,7 @@ async function queryDB(qname){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
+			let msg_TEMP = JSON.stringify(doc.course + doc.year + doc.name + doc.phoneno);
 			console.log(typeof(msg_TEMP));
 			if(!msg_TEMP.includes("undefined")){
 				message = msg_TEMP;
