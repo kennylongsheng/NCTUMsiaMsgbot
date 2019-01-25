@@ -159,7 +159,11 @@ function queryDB(qname){
 		cursor.forEach(function(doc){
 			let message = (doc.course)+(doc.year)+(doc.name)+(doc.phoneno);
 			console.log("Message ->" + JSON.stringify(message));
-			return JSON.stringify(message);
+			return new Promise(resolve => {
+				setTimeout(()=>{
+					resolve(JSON.stringify(message));
+				}, 200);
+			});
 		},
 		function(err){/*console.log(err);*/});
 	});
