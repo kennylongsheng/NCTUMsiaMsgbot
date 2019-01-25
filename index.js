@@ -178,7 +178,11 @@ function queryDB(qname){
 		let cursor = db.collection('info').find({name: qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			message = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
+			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
+			if(!msg_TEMP.includes("undefined"))
+			{
+				message = msg_TEMP;
+			}
 			console.log("CHECK -> " + message);
 		},
 		function(err){
