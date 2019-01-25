@@ -25,18 +25,8 @@ function connectDB(){
 		
 		var cursor = db.collection('whitelist').find();
 		//test
-		function iterateFunc(doc) {
-			console.log(JSON.stringify(doc, null, 4));
-		}
-
-		function errorFunc(error) {
-		   	console.log(error);
-		}
-
-		cursor.forEach(function(){
-			console.log(JSON.stringify(cursor.name));
-			console.log(JSON.stringify(cursor.age));
-			console.log(JSON.stringify(cursor.job));
+		cursor.forEach(function(doc){
+			console.log(JSON.stringify(doc));
 		}, 
 		function(err){
 			console.log(err);
@@ -48,7 +38,7 @@ function connectDB(){
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
-
+connectDB();
 app.get('/webhook',(req,res)=>{
 	let mode = req.query['hub.mode'];
 	let token = req.query['hub.verify_token'];
@@ -143,7 +133,6 @@ function separateMsg(Sender_ID, Message_Input){
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
 		// Check Query Error 
 		// queryYear and queryPhone will become NaN when convert to number
-		connectDB();
 		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){
 			Query_Type_Correct = false;
 		}
