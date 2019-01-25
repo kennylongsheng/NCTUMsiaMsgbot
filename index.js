@@ -188,6 +188,6 @@ function queryDB(qname){
 			console.log(err);
 		});
 		console.log("LAST CHECK -> " + message);
-	callback("message");	
 	});
+	return ("message");	
 };
