@@ -174,7 +174,7 @@ function queryDB(qname){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let message = "Couldn't find this person!";
+		var message = "Couldn't find this person!";
 		let cursor = db.collection('info').find({"name":qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
