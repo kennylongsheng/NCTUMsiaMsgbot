@@ -25,8 +25,8 @@ function connectDB(){
 		
 		var cursor = db.collection('whitelist').find();
 		//test
-		cursor.forEach(function(){
-			console.log(JSON.stringify(cursor));
+		cursor.forEach(function(doc){
+			console.log(JSON.stringify(doc.name));
 		}, 
 		function(err){
 			console.log(err);
