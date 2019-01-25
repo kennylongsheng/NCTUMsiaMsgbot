@@ -176,7 +176,7 @@ function queryDB(qname){
 		const db = client.db("nctumycommunity");
 		let message = "Couldn't find this person!";
 		let cursor = db.collection('info').find({"name":qname}).sort({couser: 1, year: 1});
-		
+
 		cursor.forEach(function(doc){
 			console.log(JSON.stringify(doc.name));
 			message = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
@@ -185,5 +185,5 @@ function queryDB(qname){
 			console.log(err);
 		});	
 	});
-	return (Message_Input);
+	return (message);
 };
