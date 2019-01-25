@@ -91,8 +91,8 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = await queryDB(queryName);
-		console.log(msg_ADD);
+		let msg_ADD = queryDB(queryName);
+		console.log("Msg ADD -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
@@ -161,12 +161,10 @@ function queryDB(qname){
 			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
 			console.log("CHECK-> "+msg_TEMP);
 			if(!msg_TEMP.includes("undefined")){
-				return msg_TEMP;
-			}
-			else{
-				return message;
+				message = msg_TEMP;
 			}
 		},
 		function(err){/*console.log(err);*/});
 	});
+	return message;
 };
