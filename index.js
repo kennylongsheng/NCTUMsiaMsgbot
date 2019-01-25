@@ -83,7 +83,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-function distinguishMSG(Sender_ID, Message_Input){
+async function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -91,7 +91,9 @@ function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		Message_Input = queryName +" : \n" + queryDB(queryName);
+		let msg_ADD = queryDB(queryName);
+		console.log(msg_ADD);
+		Message_Input = await queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
