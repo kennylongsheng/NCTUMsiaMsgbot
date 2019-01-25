@@ -25,8 +25,8 @@ function connectDB(){
 		
 		var cursor = db.collection('whitelist').find();
 		//test
-		cursor.forEach(function(doc){
-			console.log(JSON.stringify(doc));
+		cursor.forEach(function(){
+			console.log(JSON.stringify(cursor));
 		}, 
 		function(err){
 			console.log(err);
@@ -38,7 +38,7 @@ function connectDB(){
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
-connectDB();
+connectDB();  //////// TEST
 app.get('/webhook',(req,res)=>{
 	let mode = req.query['hub.mode'];
 	let token = req.query['hub.verify_token'];
