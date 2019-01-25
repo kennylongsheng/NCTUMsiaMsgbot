@@ -183,11 +183,11 @@ function queryDB(qname){
 			if(msg_TEMP.includes("undefined") == false){
 				message = msg_TEMP;
 			}
-			console.log("CHECK -> " + message);
 		},
 		function(err){
 			console.log(err);
 		});
-	return (message);	
+		console.log("LAST CHECK -> " + message);
+	callback(message);	
 	});
 };
