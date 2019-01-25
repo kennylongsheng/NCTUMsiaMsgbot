@@ -183,7 +183,7 @@ function queryDB(qname){
 		},
 		function(err){
 			console.log(err);
-		});	
+		});
+	return (message);	
 	});
-	return (message);
 };
