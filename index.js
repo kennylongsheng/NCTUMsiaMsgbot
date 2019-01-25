@@ -33,7 +33,7 @@ function connectDB(){
 		   	console.log(error);
 		}
 
-		cursor.forEach(function(doc){
+		cursor.forEach(function(){
 			console.log(JSON.stringify(cursor.name));
 			console.log(JSON.stringify(cursor.age));
 			console.log(JSON.stringify(cursor.job));
