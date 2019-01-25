@@ -157,7 +157,9 @@ function queryDB(qname){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			return (JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno));
+			let message = (doc.course)+(doc.year)+(doc.name)+(doc.phoneno);
+			console.log("Message ->" + message);
+			return JSON.stringify(message);
 		},
 		function(err){/*console.log(err);*/});
 	});
