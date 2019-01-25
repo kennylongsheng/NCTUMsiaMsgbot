@@ -78,12 +78,8 @@ function sendAPI(Sender_ID, Send_Message){
 		}
 	},
 	function(err,res,body){
-		if(err){
-			console.log('Sending Error');
-		}
-		else if(res.body.err){
-			console.log('Respond Body Error');
-		}
+		if(err){console.log('Sending Error');}
+		else if(res.body.err){console.log('Respond Body Error');}
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
@@ -151,7 +147,7 @@ function insertDB(qcourse, qyear, qname, qphoneno){
 	})
 };
 
-function queryDB(qname){
+async function queryDB(qname){
 	var message = "Couldn't find this person!";
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
@@ -166,10 +162,8 @@ function queryDB(qname){
 				message = msg_TEMP;
 			}
 		},
-		function(err){
-			console.log(err);
-		});
+		function(err){/*console.log(err);*/});
 		console.log("LAST CHECK -> " + message);
 	});
-	return (message);	
+	return await (message);	
 };
