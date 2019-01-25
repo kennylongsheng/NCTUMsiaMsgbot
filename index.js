@@ -34,8 +34,7 @@ app.get('/webhook',(req,res)=>{
 	}
 });
 
-//////////////////////////////////Receive Message Data//////////////////////////////////////////////////
-
+//////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
 app.post('/webhook', (req,res) => {
 	let body = req.body;
 	if (body.object === 'page'){ // PAGE_ID = 235798233272453
@@ -43,22 +42,19 @@ app.post('/webhook', (req,res) => {
 		{
 			let webhook_event = entry.messaging[0];
 			let Sender_ID = webhook_event.sender.id;
-			// Received Text
-			if(webhook_event.message&&webhook_event.message.text)
+			if(webhook_event.message&&webhook_event.message.text) // Received Text
 			{
 				let Message = webhook_event.message.text.toLowerCase();
-				console.log(Sender_ID + '->send a text message');
-				separateMsg(Sender_ID,Message);
+				console.log(Sender_ID + '-> send a text message');
+				distinguishMSG(Sender_ID,Message);
 			}
-			// Received Attachement
-			else if(webhook_event.message&&webhook_event.message.attachments[0])
+			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
+				let Message = "You've Sent An Attachment\nType \"help\" to check Instruction.";
 				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type);
-				let Message = "You've Sent An Attachment";
 				sendAPI(Sender_ID, Message);
 			}
-			// POSTBACK Things
-			else
+			else // PostBack Things Check
 			{
 				//console.log(webhook_event);				
 			}
@@ -69,10 +65,9 @@ app.post('/webhook', (req,res) => {
 	res.sendStatus(404);
 	}
 });
-
 //////////////////////////////////Send API--Don't Change//////////////////////////////////////////////////
+// send API refer to : https://www.youtube.com/watch?v=eLevk-c8Xwc&t=1192s
 function sendAPI(Sender_ID, Send_Message){
-
 	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs : {access_token : PAGE_ACCESS_TOKEN},
@@ -83,45 +78,42 @@ function sendAPI(Sender_ID, Send_Message){
 		}
 	},
 	function(err,res,body){
-		if(err)
-		{
+		if(err){
 			console.log('Sending Error');
 		}
-		else if(res.body.err)
-		{
+		else if(res.body.err){
 			console.log('Respond Body Error');
 		}
 	})
 };
-
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-function separateMsg(Sender_ID, Message_Input){
+function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
-	// PRIORITY :  number > insert > help
+	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		Message_Input = "Query Number of " + queryName;
+		Message_Input = queryName +" : \n" + queryDB(queryName);
 	} 
-	// insert <Year> <Name> <PhoneNo.>
+	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
-		let queryYear = Message_Array[Message_Array.indexOf("insert") + 1];
-		let queryName = Message_Array[Message_Array.indexOf("insert") + 2];
-		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 3];
+		let queryCourse = Message_Array[Message_Array.indexOf("insert") + 1];
+		let queryYear = Message_Array[Message_Array.indexOf("insert") + 2];
+		let queryName = Message_Array[Message_Array.indexOf("insert") + 3];
+		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 4];
 		// Check Query Error 
-		// queryYear and queryPhone will become NaN when convert to number
-		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){
+		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){ // queryYear and queryPhone will become NaN when convert to number
 			Query_Type_Correct = false;
 		}
 		else{
-			Message_Input = "Insert Number of " + queryYear + " " + queryName + " " + queryPhone;
+			insertDB(queryCourse, queryYear, queryName, queryPhone); // Insert Document to DB
+			Message_Input = "Insert -> " + queryCourse + " " + queryYear + " " + queryName + " " + queryPhone;
 		}
 	}
 	else if(Message_Array.length == 1 && Message_Array[0] === "request"){
-		let message_admin = "Someone Request!";
-		sendAPI(KennyPSID,message_admin);
+		sendAPI(KennyPSID,"Someone Request!");
 		Message_Input = "Request Sent! Please Wait For Approval.";
 	}
 	else if(Message_Input.includes("help")){
@@ -130,11 +122,12 @@ function separateMsg(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	console.log("Message Send-> " + Message_Input);
+	console.log("Message Reply-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false || Message_Input.includes("undefined")){
 		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
+		Query_Type_Correct = true;
 	}
 	else{
 		sendAPI(Sender_ID, Message_Input);
@@ -142,11 +135,10 @@ function separateMsg(Sender_ID, Message_Input){
 }
 
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
-// "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
+// mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
 function connectDB(){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true },function(err,client){
 		assert.equal(null, err);
-
 		const db = client.db("nctumycommunity");
 		
 		var cursor = db.collection('testdb').find().sort({age : 1});
@@ -160,4 +152,37 @@ function connectDB(){
 		//test end
 		client.close();
 	})
+};
+
+function insertDB(qcourse, qyear, qname, qphoneno){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		db.collection('info').insertOne({
+			"course": qcourse,
+			"year": qyear,
+			"name": qname,
+			"phoneno": qphoneno
+		});
+		client.close();
+	})
+};
+
+function queryDB(qname){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		let message = "";
+		const db = client.db("nctumycommunity");
+		let cursor = db.collection('info').find({"name":qname}).sort({couser: 1, year: 1});
+		console.log("TEST -> \n"+JSON.stringify(cursor)); // TEST
+		cursor.forEach(function(doc){
+			console.log(JSON.stringify(doc.name));
+			message = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
+		},
+		function(err){
+			console.log(err);
+		});	
+	return (Message_Input);
 };

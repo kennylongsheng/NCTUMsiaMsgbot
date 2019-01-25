@@ -4,9 +4,12 @@
 -> number <NAME>
 
 * Insert someone's phone number and name.
--> insert <Year> <NAME> <PHONE NO> 
+-> insert <Course> <Year> <NAME> <PHONE NO> 
 
-*Asking for help.
+* Request to use
+-> request
+
+* Asking for help.
 -> help
 
 // end of file
