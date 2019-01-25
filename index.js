@@ -25,6 +25,7 @@ function connectDB(){
 		
 		var cursor = db.collection('whitelist').find();
 		//test
+		/*
 		function iterateFunc(doc) {
 			console.log(JSON.stringify(doc, null, 4));
 		}
@@ -34,6 +35,9 @@ function connectDB(){
 		}
 
 		cursor.forEach(iterateFunc, errorFunc);
+		*/
+		var whitelistdata = cursor.doc;
+		console.log(JSON.stringify(whitelistdata));
 		//test end
 		client.close();
 	})
