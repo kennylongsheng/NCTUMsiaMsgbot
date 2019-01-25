@@ -35,7 +35,7 @@ function connectDB(){
 		}
 
 		cursor.forEach(iterateFunc, errorFunc);
-		fs.writeFile("/temp/testing.txt", cursor, function(err) {
+		fs.writeFile("/testing.txt", cursor, function(err) {
 		    if(err) {
 		        return console.log(err);
 		    }
