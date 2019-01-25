@@ -175,11 +175,12 @@ function queryDB(qname){
 
 		const db = client.db("nctumycommunity");
 		var message = "Couldn't find this person!";
-		let cursor = db.collection('info').find({"name":qname}).sort({couser: 1, year: 1});
+		let cursor = db.collection('info').find({name: qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
 			console.log(JSON.stringify(doc.name));
-			message = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
+			message = JSON.stringify(doc);
+			//message = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
 		},
 		function(err){
 			console.log(err);
