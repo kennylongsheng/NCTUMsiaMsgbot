@@ -91,9 +91,9 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(queryName);
+		let msg_ADD = await queryDB(queryName);
 		console.log(msg_ADD);
-		Message_Input = await queryName +" : \n" + msg_ADD;
+		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
