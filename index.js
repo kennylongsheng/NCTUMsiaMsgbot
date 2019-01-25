@@ -175,7 +175,7 @@ function queryDB(qname){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let cursor = db.collection('info').find({name: qname}).sort({couser: 1, year: 1});
+		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
 			let msg_TEMP = JSON.stringify(doc.course)+JSON.stringify(doc.year)+JSON.stringify(doc.name)+JSON.stringify(doc.phoneno);
