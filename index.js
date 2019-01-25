@@ -23,9 +23,18 @@ function connectDB(){
 
 		const db = client.db("nctumycommunity");
 		
-		var collectionData = db.collection('whitelist').find({});
-		console.log(collectionData);
+		var cursor = db.collection('whitelist').find();
+		//test
+		function iterateFunc(doc) {
+			console.log(JSON.stringify(doc, null, 4));
+		}
 
+		function errorFunc(error) {
+		   console.log(error);
+		}
+
+		cursor.forEach(iterateFunc, errorFunc);
+		//test end
 		client.close();
 	})
 };
