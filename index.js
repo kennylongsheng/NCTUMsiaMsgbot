@@ -189,5 +189,5 @@ function queryDB(qname){
 		});
 		console.log("LAST CHECK -> " + message);
 	});
-	return ("message");	
+	return (message);	
 };
