@@ -44,7 +44,7 @@ function queryDB(Sender_ID, qname){
 			console.log("Result in Query Function ->" + JSON.stringify(message));
 			console.log("Result in Query Function ->" + typeof(message));
 			console.log("Result in Query Function ->" + message);
-			return (message);
+			return (JSON.stringify(message));
 			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
