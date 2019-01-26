@@ -41,7 +41,7 @@ function queryDB(Sender_ID, qname){
 
 		cursor.forEach(function(doc){
 			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
-			console.log("Message ->" + JSON.stringify(message));
+			console.log("Message search in Query function ->" + JSON.stringify(message));
 			return (message);
 			//sendAPI(Sender_ID, message);
 		},
@@ -126,7 +126,7 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		let msg_ADD = await queryDB(Sender_ID, queryName);
-		console.log("Msg ADD -> " + msg_ADD);
+		console.log("Msg get from function return -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
