@@ -119,18 +119,17 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-function distinguishMSG(Sender_ID, Message_Input){
+async function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
-	if(Message_Input.includes("number")){ 
+	await if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = "";
+		let msg_ADD = queryDB(Sender_ID, queryName);
 		console.log("Return->" + queryDB(Sender_ID, queryName));
-		//msg_ADD = queryDB(Sender_ID, queryName);
-		//console.log("Value From Function Return -> " + msg_ADD);
+		console.log("Value From Function Return -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
@@ -158,7 +157,7 @@ function distinguishMSG(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	console.log("Message Final Reply-> " + Message_Input);
+	await console.log("Message Final Reply-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
