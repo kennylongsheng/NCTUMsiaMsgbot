@@ -154,7 +154,7 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	console.log("Message Reply-> " + Message_Input);
+	console.log("Message Final Reply-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
