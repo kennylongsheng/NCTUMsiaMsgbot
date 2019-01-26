@@ -42,8 +42,8 @@ function queryDB(Sender_ID, qname){
 		cursor.forEach(function(doc){
 			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
 			console.log("Message ->" + JSON.stringify(message));
-			//return (JSON.stringify(message));
-			sendAPI(Sender_ID, message);
+			return (message);
+			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
 	});
@@ -117,7 +117,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-function distinguishMSG(Sender_ID, Message_Input){
+async function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -125,7 +125,7 @@ function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(Sender_ID, queryName);
+		let msg_ADD = await queryDB(Sender_ID, queryName);
 		console.log("Msg ADD -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
