@@ -32,7 +32,7 @@ function insertDB(qcourse, qyear, qname, qphoneno){
 	})
 };
 
-function queryDB(qname){
+function queryDB(Sender_ID, qname){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -42,7 +42,8 @@ function queryDB(qname){
 		cursor.forEach(function(doc){
 			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
 			console.log("Message ->" + JSON.stringify(message));
-			return (JSON.stringify(message));
+			//return (JSON.stringify(message));
+			sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
 	});
@@ -124,7 +125,7 @@ function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(queryName);
+		let msg_ADD = queryDB(Sender_ID, queryName);
 		console.log("Msg ADD -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
