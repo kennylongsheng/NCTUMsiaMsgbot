@@ -41,7 +41,7 @@ function queryDB(Sender_ID, qname){
 
 		cursor.forEach(function(doc){
 			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
-			console.log("Message search in Query function ->" + JSON.stringify(message));
+			console.log("Result in Query Function ->" + JSON.stringify(message));
 			return (message);
 			//sendAPI(Sender_ID, message);
 		},
@@ -59,7 +59,7 @@ app.get('/webhook',(req,res)=>{
 
 	if(mode && token){
 		if (mode === 'subscribe' && token === VERIFY_TOKEN){
-			console.log('WEBHOOK_VERIFIED');
+			//console.log('WEBHOOK_VERIFIED');
 			res.status(200).send(challenge);
 		}
 		else{
@@ -112,8 +112,8 @@ function sendAPI(Sender_ID, Send_Message){
 		}
 	},
 	function(err,res,body){
-		if(err){console.log('Sending Error');}
-		else if(res.body.err){console.log('Respond Body Error');}
+		//if(err){console.log('Sending Error');}
+		//else if(res.body.err){console.log('Respond Body Error');}
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
@@ -126,7 +126,7 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		let msg_ADD = await queryDB(Sender_ID, queryName);
-		console.log("Msg get from function return -> " + msg_ADD);
+		console.log("Value From Function Return -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
