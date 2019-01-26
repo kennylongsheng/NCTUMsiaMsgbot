@@ -117,7 +117,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-async function distinguishMSG(Sender_ID, Message_Input){
+function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -125,7 +125,8 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = await queryDB(Sender_ID, queryName);
+		let msg_ADD = "";
+		msg_ADD = queryDB(Sender_ID, queryName);
 		console.log("Value From Function Return -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
