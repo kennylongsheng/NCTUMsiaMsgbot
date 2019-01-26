@@ -41,7 +41,7 @@ function queryDB(Sender_ID, qname){
 
 		cursor.forEach(function(doc){
 			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
-			console.log("Result in Query Function ->" + JSON.stringify(message));
+			console.log("Result in Query Function ->" + typeof(JSON.stringify(message));
 			return (message);
 			//sendAPI(Sender_ID, message);
 		},
