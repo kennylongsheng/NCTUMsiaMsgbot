@@ -125,12 +125,12 @@ async function distinguishMSG(Sender_ID, Message_Input){
 
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
-	await if(Message_Input.includes("number")){ 
+	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(Sender_ID, queryName);
+		let msg_ADD = await queryDB(Sender_ID, queryName);
 		console.log("Return->" + queryDB(Sender_ID, queryName));
 		console.log("Value From Function Return -> " + msg_ADD);
-		Message_Input = queryName +" : \n" + msg_ADD;
+		await Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
@@ -157,7 +157,7 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	await console.log("Message Final Reply-> " + Message_Input);
+	console.log("Message Final Reply-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
