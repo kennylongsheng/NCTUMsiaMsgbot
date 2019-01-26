@@ -126,8 +126,9 @@ function distinguishMSG(Sender_ID, Message_Input){
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
 		let msg_ADD = "";
-		msg_ADD = queryDB(Sender_ID, queryName);
-		console.log("Value From Function Return -> " + msg_ADD);
+		console.log("Return->" + queryDB(Sender_ID, queryName));
+		//msg_ADD = queryDB(Sender_ID, queryName);
+		//console.log("Value From Function Return -> " + msg_ADD);
 		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
