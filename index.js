@@ -17,7 +17,7 @@ const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
 // mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-function insertDB(qcourse, qyear, qname, qphoneno){
+let insertDB = function(qcourse, qyear, qname, qphoneno){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -32,7 +32,7 @@ function insertDB(qcourse, qyear, qname, qphoneno){
 	})
 };
 
-function queryDB(Sender_ID, qname){
+let queryDB = function(Sender_ID, qname){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -119,7 +119,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-async function distinguishMSG(Sender_ID, Message_Input){
+function distinguishMSG(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -127,10 +127,10 @@ async function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = await queryDB(Sender_ID, queryName);
+		let msg_ADD = queryDB(Sender_ID, queryName);
 		console.log("Return->" + queryDB(Sender_ID, queryName));
 		console.log("Value From Function Return -> " + msg_ADD);
-		await Message_Input = queryName +" : \n" + msg_ADD;
+		Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
