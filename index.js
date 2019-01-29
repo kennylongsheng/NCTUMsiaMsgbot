@@ -32,7 +32,7 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 	})
 };
 
-let queryDB = function(Sender_ID, qname, callback){
+let queryDB = function(Sender_ID, qname){
 	let message;
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
@@ -42,15 +42,15 @@ let queryDB = function(Sender_ID, qname, callback){
 
 		cursor.forEach(function(doc){
 			message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
-			console.log("Result in Query Function ->" + JSON.stringify(message));
-			console.log("Result in Query Function ->" + typeof(message));
-			console.log("Result in Query Function ->" + message);
+			//console.log("Result in Query Function ->" + JSON.stringify(message));
+			//console.log("Result in Query Function ->" + typeof(message));
+			//console.log("Result in Query Function ->" + message);
 			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
 	});
-	return (JSON.stringify(message));
-	callback();
+	//return (JSON.stringify(message));
+	return cursor;
 };
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
@@ -129,10 +129,20 @@ function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(Sender_ID, queryName);
-		console.log("Return->" + queryDB(Sender_ID, queryName));
-		console.log("Value From Function Return -> " + msg_ADD);
-		Message_Input = queryName +" : \n" + msg_ADD;
+		//let msg_ADD = queryDB(Sender_ID, queryName);
+		//console.log("Return->" + queryDB(Sender_ID, queryName));
+		//console.log("Value From Function Return -> " + msg_ADD);
+		let cursor = queryDB(Sender_ID,queryName)
+
+		cursor.forEach(function(doc){
+			Message_Input = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
+			//console.log("Result in Query Function ->" + JSON.stringify(message));
+			//console.log("Result in Query Function ->" + typeof(message));
+			//console.log("Result in Query Function ->" + message);
+			//sendAPI(Sender_ID, message);
+		},
+		function(err){/*console.log(err);*/});
+		//Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
