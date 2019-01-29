@@ -33,6 +33,7 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 };
 
 let queryDB = function(Sender_ID, qname, callback){
+	let message;
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -40,7 +41,7 @@ let queryDB = function(Sender_ID, qname, callback){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			var message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
+			message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
 			console.log("Result in Query Function ->" + JSON.stringify(message));
 			console.log("Result in Query Function ->" + typeof(message));
 			console.log("Result in Query Function ->" + message);
