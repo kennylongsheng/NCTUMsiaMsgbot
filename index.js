@@ -49,7 +49,7 @@ let queryDB = function(Sender_ID, qname, callback){
 		},
 		function(err){/*console.log(err);*/});
 	});
-	return (message.toString());
+	return (JSON.stringify(message));
 	callback();
 };
 
