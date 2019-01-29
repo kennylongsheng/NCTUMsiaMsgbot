@@ -40,7 +40,7 @@ let queryDB = function(Sender_ID, qname, callback){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 
 		cursor.forEach(function(doc){
-			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
+			var message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
 			console.log("Result in Query Function ->" + JSON.stringify(message));
 			console.log("Result in Query Function ->" + typeof(message));
 			console.log("Result in Query Function ->" + message);
@@ -48,7 +48,7 @@ let queryDB = function(Sender_ID, qname, callback){
 		},
 		function(err){/*console.log(err);*/});
 	});
-	return (JSON.stringify(message));
+	return (message.toString());
 	callback();
 };
 
