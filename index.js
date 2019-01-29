@@ -32,7 +32,7 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 	})
 };
 
-let queryDB = function(Sender_ID, qname){
+let queryDB = function(Sender_ID, qname, callback){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -44,11 +44,12 @@ let queryDB = function(Sender_ID, qname){
 			console.log("Result in Query Function ->" + JSON.stringify(message));
 			console.log("Result in Query Function ->" + typeof(message));
 			console.log("Result in Query Function ->" + message);
-			return (JSON.stringify(message));
 			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
 	});
+	return (JSON.stringify(message));
+	callback();
 };
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
