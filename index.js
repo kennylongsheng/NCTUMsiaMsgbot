@@ -91,7 +91,8 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		queryDB(Sender_ID, queryName, sendAPI)
+		queryDB(Sender_ID, queryName, sendAPI);
+		Query_Type_Correct = false;
 		//let msg_ADD = queryDB(Sender_ID, queryName);
 		//console.log("Return->" + queryDB(Sender_ID, queryName));
 		//console.log("Value From Function Return -> " + msg_ADD);
