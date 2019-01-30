@@ -156,10 +156,10 @@ let queryDB = function(Sender_ID, qname, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
-		var message;
-
+		
 		cursor.forEach(function(doc){
-			message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno) + "\n";
+			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno)+"\n";
+			send(Sender_ID, message);
 			// console.log("Result in Query Function ->" + JSON.stringify(message));
 			// console.log("Result in Query Function ->" + typeof(message));
 			// return (JSON.stringify(message));
@@ -167,6 +167,5 @@ let queryDB = function(Sender_ID, qname, send){
 		},
 		function(err){/*console.log(err);*/});
 		console.log("Result in Query Function ->" + message);
-		send(Sender_ID, message);
 	});
 };
