@@ -161,7 +161,7 @@ let queryDB = function(Sender_ID, qname, send){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
 			console.log("Result in Query Function ->" + message);
 			send(Sender_ID, message);
-			console.log(JSON.stringify(cursor));
+			console.log(JSON.stringify(doc));
 			// console.log("Result in Query Function ->" + JSON.stringify(message));
 			// console.log("Result in Query Function ->" + typeof(message));
 			// return (JSON.stringify(message));
