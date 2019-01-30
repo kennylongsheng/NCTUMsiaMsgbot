@@ -123,16 +123,14 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	else{
 		Query_Type_Correct = false;
 	}
-	console.log("Message Final Reply-> " + Message_Input);
+	// console.log("Message Final Reply-> " + Message_Input);
 
 	// Check Query Error
 	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
-		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
+		Message_Input = "Query Error!\nType \"help\" to check Instruction.";
 		Query_Type_Correct = true;
 	}
-	else{
-		sendAPI(Sender_ID, Message_Input);
-	}
+	sendAPI(Sender_ID, Message_Input);
 }
 
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
