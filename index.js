@@ -156,7 +156,7 @@ let queryDB = function(Sender_ID, qname, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
-		let message;
+		var message;
 
 		cursor.forEach(function(doc){
 			message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno) + "\n";
