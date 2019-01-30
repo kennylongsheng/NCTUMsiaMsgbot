@@ -15,42 +15,6 @@ const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8')
 
-//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
-// mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-let insertDB = function(qcourse, qyear, qname, qphoneno){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
-		assert.equal(null, err);
-
-		const db = client.db("nctumycommunity");
-		db.collection('info').insertOne({
-			"course": qcourse,
-			"year": qyear,
-			"name": qname,
-			"phoneno": qphoneno
-		});
-		client.close();
-	})
-};
-
-let queryDB = function(Sender_ID, qname){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
-		assert.equal(null, err);
-
-		const db = client.db("nctumycommunity");
-		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
-
-		cursor.forEach(function(doc){
-			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno);
-			console.log("Result in Query Function ->" + JSON.stringify(message));
-			console.log("Result in Query Function ->" + typeof(message));
-			console.log("Result in Query Function ->" + message);
-			return (JSON.stringify(message));
-			//sendAPI(Sender_ID, message);
-		},
-		function(err){/*console.log(err);*/});
-	});
-};
-
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
 
@@ -103,7 +67,7 @@ app.post('/webhook', (req,res) => {
 });
 //////////////////////////////////Send API--Don't Change//////////////////////////////////////////////////
 // send API refer to : https://www.youtube.com/watch?v=eLevk-c8Xwc&t=1192s
-function sendAPI(Sender_ID, Send_Message){
+let sendAPI = function(Sender_ID, Send_Message){
 	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs : {access_token : PAGE_ACCESS_TOKEN},
@@ -119,7 +83,7 @@ function sendAPI(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-function distinguishMSG(Sender_ID, Message_Input){
+let distinguishMSG = function(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
 	let Query_Type_Correct = true;
 
@@ -127,10 +91,11 @@ function distinguishMSG(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let msg_ADD = queryDB(Sender_ID, queryName);
-		console.log("Return->" + queryDB(Sender_ID, queryName));
-		console.log("Value From Function Return -> " + msg_ADD);
-		Message_Input = queryName +" : \n" + msg_ADD;
+		queryDB(Sender_ID, queryName, sendAPI)
+		//let msg_ADD = queryDB(Sender_ID, queryName);
+		//console.log("Return->" + queryDB(Sender_ID, queryName));
+		//console.log("Value From Function Return -> " + msg_ADD);
+		//Message_Input = queryName +" : \n" + msg_ADD;
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
@@ -168,3 +133,41 @@ function distinguishMSG(Sender_ID, Message_Input){
 		sendAPI(Sender_ID, Message_Input);
 	}
 }
+
+//////////////////////////////////CONNECT DB//////////////////////////////////////////////////
+// mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
+let insertDB = function(qcourse, qyear, qname, qphoneno){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		db.collection('info').insertOne({
+			"course": qcourse,
+			"year": qyear,
+			"name": qname,
+			"phoneno": qphoneno
+		});
+		client.close();
+	})
+};
+
+let queryDB = function(Sender_ID, qname, send){
+	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
+		let message = "";
+
+		cursor.forEach(function(doc){
+			message += (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno) + "\n";
+			// console.log("Result in Query Function ->" + JSON.stringify(message));
+			// console.log("Result in Query Function ->" + typeof(message));
+			// console.log("Result in Query Function ->" + message);
+			// return (JSON.stringify(message));
+			//sendAPI(Sender_ID, message);
+		},
+		function(err){/*console.log(err);*/});
+		send(Sender_ID, JSON.stringify(message));
+	});
+};
