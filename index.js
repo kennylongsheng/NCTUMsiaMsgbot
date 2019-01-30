@@ -158,8 +158,9 @@ let queryDB = function(Sender_ID, qname, send){
 		let cursor = db.collection('info').find({"name": qname}).sort({couser: 1, year: 1});
 		
 		cursor.forEach(function(doc){
-			let message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno)+"\n";
+			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
 			send(Sender_ID, message);
+			console.log(cursor);
 			// console.log("Result in Query Function ->" + JSON.stringify(message));
 			// console.log("Result in Query Function ->" + typeof(message));
 			// return (JSON.stringify(message));
