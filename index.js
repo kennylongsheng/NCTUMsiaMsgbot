@@ -159,6 +159,7 @@ let queryDB = function(Sender_ID, qname, send){
 		
 		cursor.forEach(function(doc){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
+			console.log("Result in Query Function ->" + message);
 			send(Sender_ID, message);
 			console.log(cursor);
 			// console.log("Result in Query Function ->" + JSON.stringify(message));
@@ -167,6 +168,5 @@ let queryDB = function(Sender_ID, qname, send){
 			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
-		console.log("Result in Query Function ->" + message);
 	});
 };
