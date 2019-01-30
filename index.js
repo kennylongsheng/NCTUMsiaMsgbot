@@ -162,11 +162,11 @@ let queryDB = function(Sender_ID, qname, send){
 			message = (doc.course)+" "+(doc.year)+" "+(doc.name)+" "+(doc.phoneno) + "\n";
 			// console.log("Result in Query Function ->" + JSON.stringify(message));
 			// console.log("Result in Query Function ->" + typeof(message));
-			console.log("Result in Query Function ->" + message);
 			// return (JSON.stringify(message));
 			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
+		console.log("Result in Query Function ->" + message);
 		send(Sender_ID, message);
 	});
 };
