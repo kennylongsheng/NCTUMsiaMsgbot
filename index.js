@@ -158,6 +158,8 @@ let queryDB = function(qname, Sender_ID, send){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 			counter += 1;
 			messageParser += message;
+			console.log("Message -> "+message);
+			console.log("MsgPars -> "+messageParser);
 			//console.log("Result in Query Function ->" + message);
 			//console.log(JSON.stringify(doc));
 		},
