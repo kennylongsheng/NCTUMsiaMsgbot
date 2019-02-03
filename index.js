@@ -90,7 +90,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
-		let queryNameString = {name : { $regex: / + Message_Array[Message_Array.indexOf("number") + 1] + /i} };
+		let queryNameString = {name : { $regex: ("/" + Message_Array[Message_Array.indexOf("number") + 1] + "/i")} };
 		//console.log(queryNameString);
 		//console.log(typeof(queryNameString));
 		//let queryName = JSON.parse(queryNameString); 
@@ -158,7 +158,7 @@ let queryDB = function(Sender_ID, qname, send){
 
 		const db = client.db("nctumycommunity");
 		console.log(typeof(qname));
-		console.log(qname);
+		console.log(qname)
 		let cursor = db.collection('info').find(qname).sort({couser: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		
 		cursor.forEach(function(doc){
