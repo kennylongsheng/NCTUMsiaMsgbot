@@ -90,7 +90,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
-		if(Message_Array[Message_Array.indexOf("number") + 1 === "all")
+		if(Message_Array[Message_Array.indexOf("number") + 1] === "all")
 		{
 			let queryNull = null;
 			queryDB(Sender_ID, queryNull , sendAPI);
