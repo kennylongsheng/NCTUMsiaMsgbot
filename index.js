@@ -146,13 +146,17 @@ let insertDB = function(qcourse, qyear, qname, qphoneno, Sender_ID, send){
 	send(Sender_ID, messageParser);
 };
 
+for(let i = 0 ; i < 10 ; i++){
+	console.log(i);
+}
+
 let queryDB = function(qname, Sender_ID, send){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let messageParser, counter;
+		let messageParser = "";
 		// cursor.forEach(function(doc){
 		// 	let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 		// 	counter += 1;
@@ -162,7 +166,7 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		for (counter = 0; ; cursor != null ; counter++){
+		for(let counter = 0; ; cursor != null ; counter++){
 			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 			cursor = cursor.hasNext() ? cursor.next() : null 
 			messageParser += message;
