@@ -85,15 +85,13 @@ let sendAPI = function(Sender_ID, Send_Message){
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 let distinguishMSG = function(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
-	let Query_Type_Correct = true;
 
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		if(Message_Array[Message_Array.indexOf("number") + 1] === "all")
 		{
-			let queryNull = null;
-			queryDB(Sender_ID, queryNull , sendAPI);
+			queryDB(Sender_ID, null , sendAPI);
 		}
 		else
 		{
@@ -109,36 +107,29 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 4];
 		// Check Query Error 
 		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){ // queryYear and queryPhone will become NaN when convert to number
-			Query_Type_Correct = false;
+			sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
 		}
 		else{
-			insertDB(queryCourse, queryYear, queryName, queryPhone); // Insert Document to DB
-			Message_Input = "Insert -> " + queryCourse + " " + queryYear + " " + queryName + " " + queryPhone;
+			insertDB(queryCourse, queryYear, queryName, queryPhone, Sender_ID, sendAPI); // Insert Document to DB
 		}
 	}
+	// request
 	else if(Message_Array.length == 1 && Message_Array[0] === "request"){
 		sendAPI(KennyPSID,"Someone Request!");
-		Message_Input = "Request Sent! Please Wait For Approval.";
+		sendAPI(Sender_ID,"Request Sent! Please Wait For Approval.");
 	}
+	//help
 	else if(Message_Input.includes("help")){
-		Message_Input = HELP_PTR;
+		sendAPI(Sender_ID,HELP_PTR);
 	}
 	else{
-		Query_Type_Correct = false;
+		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
 	}
-	// console.log("Message Final Reply-> " + Message_Input);
-
-	// Check Query Error
-	if(Query_Type_Correct == false){ // || Message_Input.includes("undefined")
-		Message_Input = "Query Error!\nType \"help\" to check Instruction.";
-		Query_Type_Correct = true;
-	}
-	sendAPI(Sender_ID, Message_Input);
 }
 
 //////////////////////////////////CONNECT DB//////////////////////////////////////////////////
 // mlab base address: "mongodb://<USERNAME>:<PASSWORD>@ds147421.mlab.com:47421/nctumycommunity"
-let insertDB = function(qcourse, qyear, qname, qphoneno){
+let insertDB = function(qcourse, qyear, qname, qphoneno, Sender_ID, send){
 	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
@@ -151,6 +142,8 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 		});
 		client.close();
 	})
+	let messageParser = "Database Insert-> "+qcourse+" "+qyear+" "+qname+" "+qphoneno;
+	send(Sender_ID, messageParser);
 };
 
 let queryDB = function(Sender_ID, qname, send){
@@ -164,13 +157,9 @@ let queryDB = function(Sender_ID, qname, send){
 		
 		cursor.forEach(function(doc){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
-			console.log("Result in Query Function ->" + message);
+			//console.log("Result in Query Function ->" + message);
+			//console.log(JSON.stringify(doc));
 			send(Sender_ID, message);
-			console.log(JSON.stringify(doc));
-			// console.log("Result in Query Function ->" + JSON.stringify(message));
-			// console.log("Result in Query Function ->" + typeof(message));
-			// return (JSON.stringify(message));
-			//sendAPI(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
 	});
