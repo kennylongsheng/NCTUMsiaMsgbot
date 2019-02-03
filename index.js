@@ -152,7 +152,7 @@ let queryDB = function(qname, Sender_ID, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let messageParser;
+		let messageParser, counter;
 		// cursor.forEach(function(doc){
 		// 	let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 		// 	counter += 1;
@@ -162,7 +162,7 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		for (let counter = 0; ; cursor != null ; counter++){
+		for (counter = 0; ; cursor != null ; counter++){
 			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 			cursor = cursor.hasNext() ? cursor.next() : null 
 			messageParser += message;
