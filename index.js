@@ -156,15 +156,14 @@ let queryDB = function(qname, Sender_ID, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let messageParser = "";
+		let messageParser = [];
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+			messageParser[counter] = message;
 			counter += 1;
-			messageParser += message;
 			console.log(doc);
 			console.log("MsgPars -> "+messageParser);
-			//console.log("Result in Query Function ->" + message);
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
