@@ -153,7 +153,7 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 let queryDB = function(Sender_ID, qname, send){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-
+		console.log(qname);
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find({name: qname}).sort({couser: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		
