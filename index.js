@@ -155,8 +155,8 @@ let queryDB = function(qname, Sender_ID, send){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		var cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		var messageParser = "";
+		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
+		let messageParser = "";
 		// cursor.forEach(function(doc){
 		// 	let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 		// 	counter += 1;
@@ -166,15 +166,15 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		var counter = 0;
+		let counter = 0;
 		// for(let counter = 0; ; cursor != null ; counter++){
 		while(cursor != null){
+			console.log(cursor)
 			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 			cursor = cursor.hasNext() ? cursor.next() : null ;
 			counter += 1 ;
 			messageParser += message;
 			console.log(messageParser);
-			console.log(JSON.stringify(cursor))
 		}
 		// 	let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 		// 	cursor = cursor.hasNext() ? cursor.next() : null 
