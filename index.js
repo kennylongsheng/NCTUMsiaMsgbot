@@ -91,6 +91,8 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// number <Name>
 	if(Message_Input.includes("number")){ 
 		let queryNameString = {name : { $regex: / + Message_Array[Message_Array.indexOf("number") + 1] + /i} };
+		console.log(queryNameString);
+		console.log(typeof(queryNameString));
 		let queryName = JSON.parse(queryNameString); 
 		queryDB(Sender_ID, queryName, sendAPI);
 		Query_Type_Correct = false;
