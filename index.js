@@ -90,7 +90,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
-		let queryNameString = {name : { $regex: ("/" + Message_Array[Message_Array.indexOf("number") + 1] + "/i")} };
+		let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} };
 		//console.log(queryNameString);
 		//console.log(typeof(queryNameString));
 		//let queryName = JSON.parse(queryNameString); 
