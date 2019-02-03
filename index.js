@@ -160,7 +160,7 @@ let queryDB = function(Sender_ID, qname, send){
 		const db = client.db("nctumycommunity");
 		console.log(typeof(qname));
 		console.log(qname)
-		let cursor = db.collection('info').find(qname).sort({couser: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
+		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		
 		cursor.forEach(function(doc){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
