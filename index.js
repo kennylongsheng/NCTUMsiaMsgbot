@@ -166,7 +166,7 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		var couter = 0;
+		var counter = 0;
 		// for(let counter = 0; ; cursor != null ; counter++){
 		while(cursor != null){
 			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
