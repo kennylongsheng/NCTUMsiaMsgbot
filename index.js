@@ -174,6 +174,7 @@ let queryDB = function(qname, Sender_ID, send){
 			counter += 1 ;
 			messageParser += message;
 			console.log(messageParser);
+			console.log(JSON.stringify(cursor))
 		}
 		// 	let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 		// 	cursor = cursor.hasNext() ? cursor.next() : null 
