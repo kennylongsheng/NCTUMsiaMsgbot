@@ -151,7 +151,9 @@ let insertDB = function(qcourse, qyear, qname, qphoneno){
 };
 
 let queryDB = function(Sender_ID, qname, send){
-	mongoClient.connect(MlabURI,{ useNewUrlParser: true }, function(err,client){
+	qname = "{ $regex: /" +qname+"/ }"
+	console.log(qname);
+	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
