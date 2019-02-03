@@ -96,7 +96,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		else
 		{
 			let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} };
-			queryDB(Sender_ID, queryNameString, sendAPI);
+			queryDB(queryNameString, Sender_ID, sendAPI);
 		}
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
@@ -146,22 +146,22 @@ let insertDB = function(qcourse, qyear, qname, qphoneno, Sender_ID, send){
 	send(Sender_ID, messageParser);
 };
 
-let queryDB = function(Sender_ID, qname, send){
+let queryDB = function(qname, Sender_ID, send){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		console.log(typeof(qname));
-		console.log(qname)
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		let counter = 0;
+		let messageParser = "";
 		cursor.forEach(function(doc){
-			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
+			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 			counter += 1;
+			messageParser += message;
 			//console.log("Result in Query Function ->" + message);
 			//console.log(JSON.stringify(doc));
-			send(Sender_ID, message);
 		},
 		function(err){/*console.log(err);*/});
+		send(Sender_ID, message);
 	});
 };
