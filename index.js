@@ -166,12 +166,13 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		for(let counter = 0; ; cursor != null ; counter++){
-			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
-			cursor = cursor.hasNext() ? cursor.next() : null 
-			messageParser += message;
-			console.log(messageParser);
-		}
+		
+		// for(let counter = 0; ; cursor != null ; counter++){
+		// 	let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
+		// 	cursor = cursor.hasNext() ? cursor.next() : null 
+		// 	messageParser += message;
+		// 	console.log(messageParser);
+		// }
 		send(Sender_ID, messageParser);
 	});
 };
