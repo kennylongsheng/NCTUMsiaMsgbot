@@ -157,30 +157,17 @@ let queryDB = function(qname, Sender_ID, send){
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		let messageParser = "";
-		// cursor.forEach(function(doc){
-		// 	let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-		// 	counter += 1;
-		// 	messageParser += message;
-		// 	console.log("MsgPars -> "+messageParser);
-		// 	//console.log("Result in Query Function ->" + message);
-		// 	//console.log(JSON.stringify(doc));
-		// },
-		// function(err){/*console.log(err);*/});
 		let counter = 0;
-		// for(let counter = 0; ; cursor != null ; counter++){
-		while(cursor != null){
-			console.log(cursor)
-			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
-			cursor = cursor.hasNext() ? cursor.next() : null ;
-			counter += 1 ;
+		cursor.forEach(function(doc){
+			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+			counter += 1;
 			messageParser += message;
-			console.log(messageParser);
-		}
-		// 	let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
-		// 	cursor = cursor.hasNext() ? cursor.next() : null 
-		// 	messageParser += message;
-		// 	console.log(messageParser);
-		// }
+			console.log(doc);
+			console.log("MsgPars -> "+messageParser);
+			//console.log("Result in Query Function ->" + message);
+			//console.log(JSON.stringify(doc));
+		},
+		function(err){/*console.log(err);*/});
 		send(Sender_ID, messageParser);
 	});
 };
