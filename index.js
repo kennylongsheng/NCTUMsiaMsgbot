@@ -169,7 +169,7 @@ let queryDB = function(qname, Sender_ID, send){
 		},
 		function(err){/*console.log(err);*/});
 		console.log("MsgPars -> "+messageParser);
-		while(msgTemp.length>0){
+		while(msgPar.length>0){
 			let msgTemp = msgPar.pop;
 			messageParser+= msgTemp;
 		}
