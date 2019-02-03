@@ -90,9 +90,8 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
-		let queryName = Message_Array[Message_Array.indexOf("number") + 1];
-		let queryParser = {name : { $regex: /kenny/i} }
-		queryDB(Sender_ID, queryParser, sendAPI);
+		let queryName = JSON.parse("{name : { $regex: /"+Message_Array[Message_Array.indexOf("number") + 1]+"/i} }"); 
+		queryDB(Sender_ID, queryName, sendAPI);
 		Query_Type_Correct = false;
 		//let msg_ADD = queryDB(Sender_ID, queryName);
 		//console.log("Return->" + queryDB(Sender_ID, queryName));
