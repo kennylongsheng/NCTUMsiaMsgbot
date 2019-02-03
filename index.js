@@ -162,6 +162,6 @@ let queryDB = function(qname, Sender_ID, send){
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
-		send(Sender_ID, message);
+		send(Sender_ID, messageParser);
 	});
 };
