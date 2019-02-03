@@ -162,9 +162,9 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		for( let counter = 0; ; cursor != null ; cursor = cursor.hasNext() ? cursor.next() : null ){
+		for (let counter = 0; ; cursor != null ; counter++){
 			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
-			counter += 1;
+			cursor = cursor.hasNext() ? cursor.next() : null 
 			messageParser += message;
 			console.log(messageParser);
 		}
