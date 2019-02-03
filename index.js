@@ -154,9 +154,10 @@ let queryDB = function(Sender_ID, qname, send){
 		console.log(typeof(qname));
 		console.log(qname)
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		
+		let counter = 0;
 		cursor.forEach(function(doc){
-			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
+			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno;
+			counter += 1;
 			//console.log("Result in Query Function ->" + message);
 			//console.log(JSON.stringify(doc));
 			send(Sender_ID, message);
