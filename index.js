@@ -166,8 +166,15 @@ let queryDB = function(qname, Sender_ID, send){
 		// 	//console.log(JSON.stringify(doc));
 		// },
 		// function(err){/*console.log(err);*/});
-		
+		let couter = 0;
 		// for(let counter = 0; ; cursor != null ; counter++){
+		while(cursor != null){
+			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
+			cursor = cursor.hasNext() ? cursor.next() : null ;
+			counter += 1 ;
+			messageParser += message;
+			console.log(messageParser);
+		}
 		// 	let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 		// 	cursor = cursor.hasNext() ? cursor.next() : null 
 		// 	messageParser += message;
