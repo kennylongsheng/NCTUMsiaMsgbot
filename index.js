@@ -90,15 +90,16 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
-		let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} };
-		//console.log(queryNameString);
-		//console.log(typeof(queryNameString));
-		//let queryName = JSON.parse(queryNameString); 
-		queryDB(Sender_ID, queryNameString, sendAPI);
-		//let msg_ADD = queryDB(Sender_ID, queryName);
-		//console.log("Return->" + queryDB(Sender_ID, queryName));
-		//console.log("Value From Function Return -> " + msg_ADD);
-		//Message_Input = queryName +" : \n" + msg_ADD;
+		if(Message_Array[Message_Array.indexOf("number") + 1 === "all")
+		{
+			let queryNull = null;
+			queryDB(Sender_ID, queryNull , sendAPI);
+		}
+		else
+		{
+			let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} };
+			queryDB(Sender_ID, queryNameString, sendAPI);
+		}
 	} 
 	// insert <Course> <Year> <Name> <PhoneNo.>
 	else if (Message_Input.includes("insert")){ 
