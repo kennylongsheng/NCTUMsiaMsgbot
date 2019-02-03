@@ -152,18 +152,22 @@ let queryDB = function(qname, Sender_ID, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let counter = 0;
 		let messageParser = [];
-		cursor.forEach(function(doc){
-			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+		// cursor.forEach(function(doc){
+		// 	let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+		// 	counter += 1;
+		// 	messageParser += message;
+		// 	console.log("MsgPars -> "+messageParser);
+		// 	//console.log("Result in Query Function ->" + message);
+		// 	//console.log(JSON.stringify(doc));
+		// },
+		// function(err){/*console.log(err);*/});
+		for( let counter = 0; ; cursor != null ; cursor = cursor.hasNext() ? cursor.next() : null ){
+			let message = counter+".) "+cursor.course+" "+cursor.year+" "+cursor.name+" "+cursor.phoneno+"\n";
 			counter += 1;
 			messageParser += message;
-			console.log("Message -> "+message);
-			console.log("MsgPars -> "+messageParser);
-			//console.log("Result in Query Function ->" + message);
-			//console.log(JSON.stringify(doc));
-		},
-		function(err){/*console.log(err);*/});
+			console.log(messageParser);
+		}
 		send(Sender_ID, messageParser);
 	});
 };
