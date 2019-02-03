@@ -95,7 +95,6 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		//console.log(typeof(queryNameString));
 		//let queryName = JSON.parse(queryNameString); 
 		queryDB(Sender_ID, queryNameString, sendAPI);
-		Query_Type_Correct = false;
 		//let msg_ADD = queryDB(Sender_ID, queryName);
 		//console.log("Return->" + queryDB(Sender_ID, queryName));
 		//console.log("Value From Function Return -> " + msg_ADD);
@@ -159,6 +158,7 @@ let queryDB = function(Sender_ID, qname, send){
 
 		const db = client.db("nctumycommunity");
 		console.log(typeof(qname));
+		console.log(qname);
 		let cursor = db.collection('info').find(qname).sort({couser: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		
 		cursor.forEach(function(doc){
