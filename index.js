@@ -168,10 +168,10 @@ let queryDB = function(qname, Sender_ID, send){
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
-		console.log("MsgPars -> "+messageParser);
 		while(msgPar.length>0){
 			let msgTemp = msgPar.pop;
 			messageParser+= msgTemp;
+			console.log("MsgPars -> "+messageParser);
 		}
 		send(Sender_ID, messageParser);
 	});
