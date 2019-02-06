@@ -160,7 +160,6 @@ let queryDB = function(qname, Sender_ID, send){
 			// console.log(message);
 			msgPar.push(message)
 			counter += 1;
-			console.log("Check msgPar Length -> "+msgPar.length)
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
