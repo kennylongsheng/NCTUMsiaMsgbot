@@ -170,7 +170,7 @@ let queryDB = function(qname, Sender_ID, send){
 			for(let i = msgPar.length ; i != 0 ; i--)
 			{
 				message += msgPar.pop();
-				console.log("Message Check -> "message);
+				console.log("Message Check -> " + message);
 			}
 			send(Sender_ID, message); // messageParser
 		}, 1000);
