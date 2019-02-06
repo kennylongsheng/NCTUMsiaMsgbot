@@ -165,8 +165,13 @@ let queryDB = function(qname, Sender_ID, send){
 		},
 		function(err){/*console.log(err);*/});
 		setTimeout(function(){
-			console.log("Check msgPar outside function -> "+msgPar.length)
-			send(Sender_ID, msgPar); // messageParser
+			let message = ""
+			//console.log("Check msgPar outside function -> "+msgPar.length)
+			for(let i = msgPar.length ; i != 0 ; i--)
+			{
+				message += msgPar.pop();
+			}
+			send(Sender_ID, message); // messageParser
 		}, 1000);
 	});
 };
