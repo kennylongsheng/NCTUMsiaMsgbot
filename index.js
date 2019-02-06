@@ -159,7 +159,7 @@ let queryDB = function(qname, Sender_ID, send){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 			msgPar.push(message)
 			counter += 1;
-			send(Sender_ID, msgPar); // messageParser
+			send(Sender_ID, msgPar.length()); // messageParser
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
