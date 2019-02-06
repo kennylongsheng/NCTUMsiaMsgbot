@@ -164,6 +164,7 @@ let queryDB = function(qname, Sender_ID, send){
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
+		setTimeout('', 1000);
 		console.log("Check msgPar outside function -> "+msgPar.length)
 		send(Sender_ID, msgPar); // messageParser
 	});
