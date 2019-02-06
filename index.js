@@ -15,8 +15,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8');
-var msgPar = new queue();
-console.log("Queue Created!");
+var msgPar = queue();
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -161,6 +160,7 @@ let queryDB = function(qname, Sender_ID, send){
 			console.log(message);
 			msgPar.push(message)
 			counter += 1;
+			console.log(msgPar.length)
 			send(Sender_ID, msgPar); // messageParser
 			//console.log(JSON.stringify(doc));
 		},
