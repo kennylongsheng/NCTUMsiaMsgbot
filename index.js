@@ -7,7 +7,7 @@ const request = require('request');
 const fs = require('fs');
 const assert = require('assert');
 const mongoClient = require('mongodb').MongoClient;
-const queue = require('better-queue');
+const queue = require('queue');
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -16,7 +16,7 @@ const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8');
 var msgPar = new queue();
-console.log("Queue Createed!");
+console.log("Queue Created!");
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
@@ -158,10 +158,10 @@ let queryDB = function(qname, Sender_ID, send){
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+			console.log(message);
 			msgPar.push(message)
 			counter += 1;
 			send(Sender_ID, msgPar); // messageParser
-			console.log(msgPar.getStats());
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
