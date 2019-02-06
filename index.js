@@ -157,7 +157,6 @@ let queryDB = function(qname, Sender_ID, send){
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			messageParser[counter] = message;
 			msgPar.push(message)
 			counter += 1;
 			send(Sender_ID, msgPar); // messageParser
