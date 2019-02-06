@@ -15,7 +15,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('txt/help.txt','utf8');
-var msgPar = new queue(fn);
+var msgPar = new queue();
 console.log("Queue Createed!");
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
