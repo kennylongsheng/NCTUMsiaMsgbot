@@ -148,31 +148,21 @@ let insertDB = function(qcourse, qyear, qname, qphoneno, Sender_ID, send){
 	send(Sender_ID, messageParser);
 };
 
-for(let i = 0 ; i < 10 ; i++){
-	console.log(i);
-}
-
 let queryDB = function(qname, Sender_ID, send){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let messageParser = [];
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
 			messageParser[counter] = message;
 			msgPar.push(message)
 			counter += 1;
+			send(Sender_ID, msgPar); // messageParser
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
-		while(msgPar.length>0){
-			let msgTemp = msgPar.pop;
-			messageParser+= msgTemp;
-			console.log("MsgPars -> "+messageParser);
-		}
-		send(Sender_ID, messageParser);
 	});
 };
