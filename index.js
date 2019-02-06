@@ -157,13 +157,14 @@ let queryDB = function(qname, Sender_ID, send){
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			console.log(message);
+			// console.log(message);
 			msgPar.push(message)
 			counter += 1;
-			console.log(msgPar.length)
-			send(Sender_ID, msgPar); // messageParser
+			console.log("Check msgPar Length -> "+msgPar.length)
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
 	});
+	console.log("Check msgPar outside function -> "+msgPar.length)
+	send(Sender_ID, msgPar); // messageParser
 };
