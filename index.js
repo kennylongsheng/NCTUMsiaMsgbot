@@ -172,6 +172,6 @@ let queryDB = function(qname, Sender_ID, send){
 				message += msgPar.pop();
 			}
 			send(Sender_ID, message); // messageParser
-		}, 1000);
+		}, 2000);
 	});
 };
