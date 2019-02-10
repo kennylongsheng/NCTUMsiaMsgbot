@@ -37,7 +37,7 @@ app.get('/webhook',(req,res)=>{
 });
 
 app.get('/admin',(req,res)=>{
-	res.sendFile('/index.html');
+	res.sendFile('index.html');
 })
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
