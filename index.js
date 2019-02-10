@@ -39,6 +39,7 @@ app.get('/webhook',(req,res)=>{
 
 app.get('/admin',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/index.html'));
+	 console.log(path.join(__dirname + '/index.html'));
 })
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
