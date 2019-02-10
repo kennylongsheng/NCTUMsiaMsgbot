@@ -36,6 +36,10 @@ app.get('/webhook',(req,res)=>{
 	}
 });
 
+app.get('/admin',(req,res)=>{
+	res.sendFile('/index.html');
+})
+
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
 app.post('/webhook', (req,res) => {
 	let body = req.body;
@@ -157,7 +161,6 @@ let queryDB = function(qname, Sender_ID, send){
 		let counter = 0;
 		cursor.forEach(function(doc){
 			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			// console.log(message);
 			msgPar.push(message)
 			counter += 1;
 			//console.log(JSON.stringify(doc));
@@ -165,7 +168,6 @@ let queryDB = function(qname, Sender_ID, send){
 		function(err){/*console.log(err);*/});
 		setTimeout(function(){
 			let message = ""
-			//console.log("Check msgPar outside function -> "+msgPar.length)
 			for(let i = msgPar.length ; i != 0 ; i--)
 			{
 				message = msgPar.pop() + message;
