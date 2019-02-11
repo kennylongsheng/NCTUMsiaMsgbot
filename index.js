@@ -39,11 +39,6 @@ app.get('/webhook',(req,res)=>{
 
 app.get('/admin',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/index.html'));
-	 res.sendFile(path.join(__dirname + '/style.css'));
-	 res.sendFile(path.join(__dirname + '/app.js'));
-	 res.sendFile(path.join(__dirname + '/image/paper.png'));
-	 res.sendFile(path.join(__dirname + '/image/rock.png'));
-	 res.sendFile(path.join(__dirname + '/image/scissors.png'));
 	 console.log(path.join(__dirname));
 })
 
