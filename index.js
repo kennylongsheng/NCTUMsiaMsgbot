@@ -36,7 +36,7 @@ app.get('/webhook',(req,res)=>{
 		}
 	}
 });
-
+/*
 app.get('/admin',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/adminPage/index.html'));
 })
@@ -55,7 +55,13 @@ app.get('/image/paper.png',(req,res)=>{
 app.get('/image/scissors.png',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/adminPage/image/scissors.png'));
 })
-//app.use(express.static('adminPage'))
+*/
+function useapp(){
+	app.use(express.static('adminPage'))
+}
+app.get('/admin',(req,res)=>{
+	useapp();
+})
 
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
