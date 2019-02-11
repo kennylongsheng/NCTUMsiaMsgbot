@@ -38,10 +38,10 @@ app.get('/webhook',(req,res)=>{
 });
 
 app.get('/admin',(req,res)=>{
-	 res.sendFile(path.join(__dirname + 'adminPage/index.html'));
+	 res.sendFile(path.join(__dirname + '/adminPage/index.html'));
 })
 app.get('/style.css',(req,res)=>{
-	 res.sendFile(path.join(__dirname + 'adminPage/style.css'));
+	 res.sendFile(path.join(__dirname + '/adminPage/style.css'));
 })
 //app.use(express.static('adminPage'))
 
