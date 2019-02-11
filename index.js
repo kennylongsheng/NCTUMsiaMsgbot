@@ -43,6 +43,18 @@ app.get('/admin',(req,res)=>{
 app.get('/style.css',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/adminPage/style.css'));
 })
+app.get('/app.js',(req,res)=>{
+	 res.sendFile(path.join(__dirname + '/adminPage/app.js'));
+})
+app.get('/image/rock.png',(req,res)=>{
+	 res.sendFile(path.join(__dirname + '/adminPage/image/rock.png'));
+})
+app.get('/image/paper.png',(req,res)=>{
+	 res.sendFile(path.join(__dirname + '/adminPage/image/paper.png'));
+})
+app.get('/image/scissors.png',(req,res)=>{
+	 res.sendFile(path.join(__dirname + '/adminPage/image/scissors.png'));
+})
 //app.use(express.static('adminPage'))
 
 
