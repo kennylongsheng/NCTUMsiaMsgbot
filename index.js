@@ -161,7 +161,8 @@ let queryDB = function(qname, Sender_ID, send){
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		cursor.forEach(function(doc){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			msgPar.push(message)	
+			msgPar.push(message)
+			send(Sender_ID,message)	
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
