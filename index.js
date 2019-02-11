@@ -15,7 +15,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
-const HELP_PTR = fs.readFileSync('txt/help.txt','utf8');
+const HELP_PTR = fs.readFileSync('adminPage/help.txt','utf8');
 var msgPar = queue();
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
@@ -38,8 +38,8 @@ app.get('/webhook',(req,res)=>{
 });
 
 app.get('/admin',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/index.php'));
-	 console.log(path.join(__dirname));
+	 app.use(express.static('adminPage'))
+	 //res.sendFile(path.join(__dirname + '/index.php'));
 })
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
