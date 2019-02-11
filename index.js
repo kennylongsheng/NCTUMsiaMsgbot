@@ -19,7 +19,7 @@ const HELP_PTR = fs.readFileSync('adminPage/help.txt','utf8');
 var msgPar = queue();
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
-app.listen(process.env.PORT || 9482 ,() => console.log('webhook is listening'));
+app.listen(process.env.PORT || 9482 ,() => console.log(`webhook is listening`));
 
 app.get('/webhook',(req,res)=>{
 	let mode = req.query['hub.mode'];
@@ -52,13 +52,13 @@ app.post('/webhook', (req,res) => {
 			if(webhook_event.message&&webhook_event.message.text) // Received Text
 			{
 				let Message = webhook_event.message.text.toLowerCase();
-				console.log(Sender_ID + '-> send a text message');
+				console.log(`${Sender_ID} -> send a text message`);
 				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
-				let Message = "You've Sent An Attachment\nType \"help\" to check Instruction.";
-				console.log(Sender_ID + ' send an ' + webhook_event.message.attachments[0].type);
+				let Message = `You've Sent An Attachment\nType \"help\" to check Instruction.`;
+				console.log(`${Sender_ID} send an ${webhook_event.message.attachments[0].type}`);
 				sendAPI(Sender_ID, Message);
 			}
 			else // PostBack Things Check
@@ -114,7 +114,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		let queryPhone = Message_Array[Message_Array.indexOf("insert") + 4];
 		// Check Query Error 
 		if(isNaN(Number(queryYear)) || isNaN(Number(queryPhone))){ // queryYear and queryPhone will become NaN when convert to number
-			sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
+			sendAPI(Sender_ID, `Query Error!\nType \"help\" to check Instruction.`);
 		}
 		else{
 			insertDB(queryCourse, queryYear, queryName, queryPhone, Sender_ID, sendAPI); // Insert Document to DB
@@ -122,7 +122,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	}
 	// request
 	else if(Message_Array.length == 1 && Message_Array[0] === "request"){
-		sendAPI(KennyPSID, `${Sender_ID} Request`);
+		sendAPI(KennyPSID, `${Sender_ID} Request!`);
 		sendAPI(Sender_ID, `Request Sent! Please Wait For Approval.`);
 	}
 	//help
@@ -130,7 +130,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		sendAPI(Sender_ID,HELP_PTR);
 	}
 	else{
-		sendAPI(Sender_ID, "Query Error!\nType \"help\" to check Instruction.");
+		sendAPI(Sender_ID, `Query Error!\nType \"help\" to check Instruction.`);
 	}
 }
 
@@ -149,7 +149,7 @@ let insertDB = function(qcourse, qyear, qname, qphoneno, Sender_ID, send){
 		});
 		client.close();
 	})
-	let messageParser = "Database Insert-> "+qcourse+" "+qyear+" "+qname+" "+qphoneno;
+	let messageParser = `Database Insert-> ${qcourse} ${qyear} ${qname} ${qphoneno}`;
 	send(Sender_ID, messageParser);
 };
 
@@ -160,7 +160,7 @@ let queryDB = function(qname, Sender_ID, send){
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		cursor.forEach(function(doc){
-			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
 			//console.log(JSON.stringify(doc));
 		},
@@ -171,7 +171,7 @@ let queryDB = function(qname, Sender_ID, send){
 			{
 				message = msgPar.pop() + message;
 			}
-			console.log("Message Check -> " + message);
+			console.log(`Message Check -> ${message}`);
 			send(Sender_ID, message); // messageParser
 		}, 1000);
 	});
