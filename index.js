@@ -56,11 +56,12 @@ app.get('/image/scissors.png',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/adminPage/image/scissors.png'));
 })
 */
-function useapp(){
-	app.use(express.static('adminPage'))
-}
-app.get('/admin',(req,res)=>{
-	useapp();
+ 
+// function useapp(){
+// 	app.use(express.static('adminPage'))
+// }
+app.use('/admin',(req,res)=>{
+	express.static('adminPage');
 })
 
 
