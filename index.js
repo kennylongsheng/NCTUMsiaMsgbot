@@ -98,7 +98,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	if(Message_Input.includes("number")){ 
 		if(Message_Array[Message_Array.indexOf("number") + 1] === "all")
 		{
-			queryDB(Sender_ID, null , sendAPI);
+			queryDB(null, Sender_ID, sendAPI);
 		}
 		else
 		{
@@ -122,8 +122,8 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 	}
 	// request
 	else if(Message_Array.length == 1 && Message_Array[0] === "request"){
-		sendAPI(KennyPSID,"Someone Request!");
-		sendAPI(Sender_ID,"Request Sent! Please Wait For Approval.");
+		sendAPI(KennyPSID, `${Sender_ID} Request`);
+		sendAPI(Sender_ID, `Request Sent! Please Wait For Approval.`);
 	}
 	//help
 	else if(Message_Input.includes("help")){
@@ -161,8 +161,7 @@ let queryDB = function(qname, Sender_ID, send){
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
 		cursor.forEach(function(doc){
 			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			msgPar.push(message)
-			send(Sender_ID,message)	
+			msgPar.push(message)	
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
