@@ -38,9 +38,13 @@ app.get('/webhook',(req,res)=>{
 });
 
 app.get('/admin',(req,res)=>{
-	 app.use(express.static('adminPage'))
-	 //res.sendFile(path.join(__dirname + '/index.php'));
+	 res.sendFile(path.join(__dirname + 'adminPage/index.html'));
 })
+app.get('/style.css',(req,res)=>{
+	 res.sendFile(path.join(__dirname + 'adminPage/style.css'));
+})
+//app.use(express.static('adminPage'))
+
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
 app.post('/webhook', (req,res) => {
