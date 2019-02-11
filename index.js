@@ -56,10 +56,7 @@ app.get('/image/scissors.png',(req,res)=>{
 	 res.sendFile(path.join(__dirname + '/adminPage/image/scissors.png'));
 })
 */
-app.get('/admin',()=>{
-	express.static('adminPage');
-	console.log("adminPage-Running");
-})
+app.use('/admin',express.static('adminPage'));
 
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
