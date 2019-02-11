@@ -36,28 +36,10 @@ app.get('/webhook',(req,res)=>{
 		}
 	}
 });
-/*
-app.get('/admin',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/index.html'));
-})
-app.get('/style.css',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/style.css'));
-})
-app.get('/app.js',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/app.js'));
-})
-app.get('/image/rock.png',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/image/rock.png'));
-})
-app.get('/image/paper.png',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/image/paper.png'));
-})
-app.get('/image/scissors.png',(req,res)=>{
-	 res.sendFile(path.join(__dirname + '/adminPage/image/scissors.png'));
-})
-*/
-app.use('/admin',express.static('adminPage'));
 
+//////////////////////////////////Send Admin Page--Don't Change//////////////////////////////////////////////////
+// path prefix part ref to : https://www.tutorialspoint.com/expressjs/expressjs_static_files.htm
+app.use('/admin',express.static('adminPage'));
 
 //////////////////////////////////Receive Message Data--Don't Change//////////////////////////////////////////////////
 app.post('/webhook', (req,res) => {
@@ -177,11 +159,9 @@ let queryDB = function(qname, Sender_ID, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
-		let counter = 0;
 		cursor.forEach(function(doc){
-			let message = counter+".) "+doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
-			msgPar.push(message)
-			counter += 1;
+			let message = doc.course+" "+doc.year+" "+doc.name+" "+doc.phoneno+"\n";
+			msgPar.push(message)	
 			//console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
