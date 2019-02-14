@@ -104,7 +104,7 @@ let distinguishMSG = function(Sender_ID, Message_Input){
 		}
 		else
 		{
-			let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} };
+			let queryNameString = {name : { $regex: ( Message_Array[Message_Array.indexOf("number") + 1] )} }; // "{ $regex: /" +qname+"/ }"
 			queryDB(queryNameString, Sender_ID, sendAPI);
 		}
 	} 
@@ -160,7 +160,7 @@ let queryDB = function(qname, Sender_ID, send){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); // "{ $regex: /" +qname+"/ }"
+		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); 
 		cursor.forEach(function(doc){
 			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
