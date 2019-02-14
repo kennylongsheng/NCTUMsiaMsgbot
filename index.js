@@ -184,7 +184,7 @@ let queryIdentity = function(query){
 		console.log(`In queryIdentity function. \n ${typeof(query)}`)
 
 		const ans = client.db("nctumycommunity").collection('whitelist').find(query);
-		console.log(`consolelog -> ${ans} ${typeof(ans)}`);
+		console.log(`consolelog -> ${JSON.stringify(ans)} ${typeof(ans)}`);
 		if (ans == null){
 			console.log(`${JSON.stringify(query)} is not on whitelist`)
 		}
