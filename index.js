@@ -181,8 +181,7 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-		console.log(`In queryIdentity function. ${typeof(query)}`)
-
+		
 		let ans = client.db("nctumycommunity").collection('whitelist').find(query);
 		ans.forEach((doc)=>{
 			console.log(JSON.stringify(doc));
