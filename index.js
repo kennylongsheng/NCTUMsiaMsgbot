@@ -184,9 +184,6 @@ let queryIdentity = function(Sender_ID){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('whitelist').findOne({PSID: Sender_ID });
-		cursor.forEach(function(doc){
-			console.log(JSON.stringify(doc));
-		},
-		function(err){console.log(err);});
+		console.log(`CHECK CURSOR -> ${JSON.stringify(cursor)}`);
 	});
 };
