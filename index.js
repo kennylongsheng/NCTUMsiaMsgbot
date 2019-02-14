@@ -188,7 +188,7 @@ let queryIdentity = function(query){
 			if(err){console.log(err)};
 			if(!result.length){;}
 			else{
-				result.forEach(function(doc)=>{
+				result.forEach(function(doc){
 					console.log(JSON.stringify(doc));
 				})
 			}
