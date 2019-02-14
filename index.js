@@ -164,7 +164,7 @@ let queryDB = function(qname, Sender_ID, send){
 		cursor.forEach(function(doc){
 			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
-			//console.log(JSON.stringify(doc));
+			console.log(JSON.stringify(doc));
 		},
 		function(err){/*console.log(err);*/});
 		setTimeout(function(){
