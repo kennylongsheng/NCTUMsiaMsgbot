@@ -182,19 +182,21 @@ let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 		
-		let ans = client.db("nctumycommunity").collection('whitelist').find(query,(err, result)=>{
-			if(err){
-				console.log(`Error!`);
-			}
-			else if(!result){
-				console.log(`Result -> ${result}`);
-			}
+		console.log(client.db("nctumycommunity").collection('whitelist').find(query));
+
+		client.db("nctumycommunity").collection('whitelist').find(query,(err, result)=>{
+			if(err){console.log(err)};
 			else{
-				console.log(`Don't know!`);
+				result.forEach(function(doc)=>{
+					console.log(JSON.stringify(doc));
+				})
 			}
 		});
-		ans.forEach((doc)=>{
-		console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
-		})
+
+		// let ans = client.db("nctumycommunity").collection('whitelist').find(query);
+		
+		// ans.forEach((doc)=>{
+		// console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
+		// })
 	});
 };
