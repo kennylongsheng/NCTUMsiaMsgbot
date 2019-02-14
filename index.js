@@ -179,13 +179,13 @@ let queryDB = function(qname, Sender_ID, send){
 	});
 };
 let queryIdentity = function(query){
-	console.log(`In queryIdentity function. \n ${typeof(query)}`)
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
+		console.log(`In queryIdentity function. \n ${typeof(query)}`)
 
-		const db = client.db("nctumycommunity");
-		let cursor = db.collection('whitelist').find(query);
-		if (cursor == null){
+		const ans = client.db("nctumycommunity").collection('whitelist').find(query);
+		console.log(`consolelog -> ${ans} ${typeof(ans)}`);
+		if (ans == null){
 			console.log(`${JSON.stringify(query)} is not on whitelist`)
 		}
 		else{
