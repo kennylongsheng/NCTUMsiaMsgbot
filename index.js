@@ -181,10 +181,13 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-		
-		// console.log(client.db("nctumycommunity").collection('whitelist').find(query));
 
+		console.log(`_________________`)
+		console.log(client.db("nctumycommunity").collection('whitelist').find(query));
+		console.log(`_________________`)
+		
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
+			console.log(result);
 			if(err){console.log(err)};
 			if(!result.length){;}
 			else{
