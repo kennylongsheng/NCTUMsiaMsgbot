@@ -183,15 +183,18 @@ let queryIdentity = function(query){
 		assert.equal(null, err);
 		console.log(`In queryIdentity function. \n ${typeof(query)}`)
 
-		const ans = client.db("nctumycommunity").collection('whitelist').find(query);
-		console.log(`consolelog -> ${JSON.stringify(ans)} ${typeof(ans)}`);
-		if (ans == null){
-			console.log(`${JSON.stringify(query)} is not on whitelist`)
-		}
-		else{
-			ans.forEach((doc)=>{
-				console.log(`CHECK CURSOR -> ${JSON.stringify(doc)}`);
-			})
-		}
+		let ans = client.db("nctumycommunity").collection('whitelist').find(query);
+		ans.forEach((doc)=>{
+			console.log(JSON.stringify(doc));
+		})
+		// console.log(`consolelog -> ${JSON.stringify(ans)} ${typeof(ans)}`);
+		// if (ans == null){
+		// 	console.log(`${JSON.stringify(query)} is not on whitelist`)
+		// }
+		// else{
+		// 	ans.forEach((doc)=>{
+		// 		console.log(`CHECK CURSOR -> ${JSON.stringify(doc)}`);
+		// 	})
+		// }
 	});
 };
