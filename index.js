@@ -164,7 +164,7 @@ let queryDB = function(qname, Sender_ID, send){
 		cursor.forEach(function(doc){
 			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
-			console.log(JSON.stringify(doc));
+			console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
 		},
 		function(err){/*console.log(err);*/});
 		setTimeout(function(){
@@ -184,9 +184,8 @@ let queryIdentity = function(query){
 		
 		let ans = client.db("nctumycommunity").collection('whitelist').find(query);
 		ans.forEach((doc)=>{
-			console.log(JSON.stringify(doc));
+			console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
 		})
-		// console.log(`consolelog -> ${JSON.stringify(ans)} ${typeof(ans)}`);
 		// if (ans == null){
 		// 	console.log(`${JSON.stringify(query)} is not on whitelist`)
 		// }
