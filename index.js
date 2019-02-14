@@ -53,7 +53,7 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				queryIdentity(Sender_ID);
+				queryIdentity({PSID : Sender_ID});
 				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
@@ -178,15 +178,15 @@ let queryDB = function(qname, Sender_ID, send){
 		}, 1000);
 	});
 };
-let queryIdentity = function(Sender_ID){
-	console.log(`In queryIdentity function. \n ${typeof(Sender_ID)}`)
+let queryIdentity = function(query){
+	console.log(`In queryIdentity function. \n ${typeof(query)}`)
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let cursor = db.collection('whitelist').find({PSID : Sender_ID });
+		let cursor = db.collection('whitelist').find(query);
 		if (cursor == null){
-			console.log(`${Sender_ID} is not on whitelist`)
+			console.log(`${JSON.stringify(query)} is not on whitelist`)
 		}
 		else{
 			cursor.forEach((doc)=>{
