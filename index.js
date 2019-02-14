@@ -189,8 +189,8 @@ let queryIdentity = function(query){
 			console.log(`${JSON.stringify(query)} is not on whitelist`)
 		}
 		else{
-			cursor.forEach((doc)=>{
-				console.log(`CHECK CURSOR -> ${JSON.stringify(cursor)}`);
+			ans.forEach((doc)=>{
+				console.log(`CHECK CURSOR -> ${JSON.stringify(doc)}`);
 			})
 		}
 	});
