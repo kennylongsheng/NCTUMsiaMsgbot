@@ -161,6 +161,7 @@ let queryDB = function(qname, Sender_ID, send){
 
 		const db = client.db("nctumycommunity");
 		let cursor = db.collection('info').find(qname).sort({course: 1, year: 1}); 
+		if(cursor === null){ console.log(`NULL!!!!!!`);}
 		cursor.forEach(function(doc){
 			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
