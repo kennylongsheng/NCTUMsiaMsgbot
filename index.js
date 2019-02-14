@@ -53,7 +53,7 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				queryIdentity({PSID : Sender_ID});
+				queryIdentity({"PSID" : Sender_ID});
 				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
@@ -181,7 +181,7 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-		console.log(`In queryIdentity function. \n ${typeof(query)}`)
+		console.log(`In queryIdentity function. ${typeof(query)}`)
 
 		let ans = client.db("nctumycommunity").collection('whitelist').find(query);
 		ans.forEach((doc)=>{
