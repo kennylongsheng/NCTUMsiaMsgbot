@@ -173,18 +173,18 @@ let queryDB = function(qname, Sender_ID, send){
 			{
 				message = msgPar.pop() + message;
 			}
-			console.log(`Message Check -> ${message}`);
-			send(Sender_ID, message); // messageParser
+			//console.log(`Message Check -> ${message}`); //Final Check Message
+			send(Sender_ID, message);
 		}, 1000);
 	});
 };
 let queryIdentity = function(Sender_ID){
-	console.log(`In queryIdentity function.`)
+	console.log(`In queryIdentity function. \n ${typeof(Sender_ID)}`)
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
 		const db = client.db("nctumycommunity");
-		let cursor = db.collection('whitelist').find({PSID: Sender_ID });
+		let cursor = db.collection('whitelist').find({PSID : Sender_ID });
 		if (cursor == null){
 			console.log(`${Sender_ID} is not on whitelist`)
 		}
