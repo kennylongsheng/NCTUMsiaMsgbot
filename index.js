@@ -53,8 +53,8 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				distinguishMSG(Sender_ID,Message);
 				queryIdentity(Sender_ID);
+				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
@@ -179,6 +179,7 @@ let queryDB = function(qname, Sender_ID, send){
 	});
 };
 let queryIdentity = function(Sender_ID){
+	console.log(`In queryIdentity function.`)
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
