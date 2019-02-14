@@ -165,7 +165,7 @@ let queryDB = function(qname, Sender_ID, send){
 		cursor.forEach(function(doc){
 			let message = `${doc.course} ${doc.year} ${doc.name} ${doc.phoneno}\n`;
 			msgPar.push(message)	
-			console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
+			// console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
 		},
 		function(err){/*console.log(err);*/});
 		setTimeout(function(){
@@ -187,8 +187,11 @@ let queryIdentity = function(query){
 			if(err){
 				console.log(`Error!`);
 			}
-			if(result){
-				console.log(typeof(result));
+			else if(result){
+				console.log(JSON.stringify(result));
+			}
+			else{
+				console.log(`Don't know!`);
 			}
 		});
 		// ans.forEach((doc)=>{
