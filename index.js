@@ -190,7 +190,7 @@ let queryIdentity = function(query){
 			else if(result){
 				result.forEach((doc)=>{
 				console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
-				}
+				})
 			}
 		});
 		ans.forEach((doc)=>{
