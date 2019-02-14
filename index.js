@@ -54,6 +54,7 @@ app.post('/webhook', (req,res) => {
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
 				distinguishMSG(Sender_ID,Message);
+				queryIdentity(Sender_ID);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
@@ -72,6 +73,7 @@ app.post('/webhook', (req,res) => {
 	res.sendStatus(404);
 	}
 });
+
 //////////////////////////////////Send API--Don't Change//////////////////////////////////////////////////
 // send API refer to : https://www.youtube.com/watch?v=eLevk-c8Xwc&t=1192s
 let sendAPI = function(Sender_ID, Send_Message){
@@ -174,5 +176,17 @@ let queryDB = function(qname, Sender_ID, send){
 			console.log(`Message Check -> ${message}`);
 			send(Sender_ID, message); // messageParser
 		}, 1000);
+	});
+};
+let queryIdentity = function(Sender_ID){
+	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
+		assert.equal(null, err);
+
+		const db = client.db("nctumycommunity");
+		let cursor = db.collection('whitelist').findOne({PSID: Sender_ID });
+		cursor.forEach(function(doc){
+			console.log(JSON.stringify(doc));
+		},
+		function(err){console.log(err);});
 	});
 };
