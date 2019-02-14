@@ -194,16 +194,8 @@ let queryIdentity = function(query){
 				// })
 			}
 		});
-		ans.forEach((doc)=>{
-			console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
-		})
-		// if (ans == null){
-		// 	console.log(`${JSON.stringify(query)} is not on whitelist`)
-		// }
-		// else{
-		// 	ans.forEach((doc)=>{
-		// 		console.log(`CHECK CURSOR -> ${JSON.stringify(doc)}`);
-		// 	})
-		// }
+		// ans.forEach((doc)=>{
+		// 	console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
+		// })
 	});
 };
