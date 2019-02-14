@@ -186,6 +186,7 @@ let queryIdentity = function(query){
 
 		client.db("nctumycommunity").collection('whitelist').find(query,(err, result)=>{
 			if(err){console.log(err)};
+			if(!result.length){;}
 			else{
 				result.forEach(function(doc)=>{
 					console.log(JSON.stringify(doc));
