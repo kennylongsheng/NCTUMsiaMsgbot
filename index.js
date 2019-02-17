@@ -181,14 +181,18 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-
+		
+		console.log(`Count -> ${client.db("nctumycommunity").collection('whitelist').find(query).count()}`);
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
 			if(err){console.log(err)};
-			if(!result.length){;}
-			else{
-				result.forEach(function(doc){
+			result.forEach(function(doc){
 					console.log(JSON.stringify(doc));
-				})
+			})
+			// if(!result.length){;}
+			// else{
+			// 	result.forEach(function(doc){
+			// 		console.log(JSON.stringify(doc));
+			// 	})
 			}
 		});
 	});
