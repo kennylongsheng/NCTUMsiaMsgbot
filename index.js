@@ -54,6 +54,7 @@ app.post('/webhook', (req,res) => {
 				console.log(`${Sender_ID} -> send a text message`);
 				queryIdentity({'PSID' : Number(Sender_ID)}).then(function(result){
 					console.log(`ID_Result -> ${result}`);
+					return sendAPI(Sender_ID,result);
 				});
 				distinguishMSG(Sender_ID,Message);
 			}
