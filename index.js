@@ -55,9 +55,13 @@ app.post('/webhook', (req,res) => {
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
 				console.log(`Identity before -> ${identity}`);
-				queryIdentity(Sender_ID);
-				console.log(`Identity after -> ${identity}`);
-				distinguishMSG(Sender_ID,Message);
+				let result = queryIdentity(Sender_ID);
+				console.log(result)
+				setTimeout(function(){
+					console.log(`Identity after -> ${identity}`);
+					console.log(result)
+					distinguishMSG(Sender_ID,Message);
+				}, 100);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
