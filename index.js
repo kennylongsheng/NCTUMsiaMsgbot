@@ -53,7 +53,7 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				queryIdentity({'PSID' : Number(Sender_ID)}).then(function(result){
+				queryIdentity(Sender_ID).then(function(result){
 					console.log(`ID_Result -> ${result}`);
 					return sendAPI(Sender_ID,result);
 				});
@@ -181,24 +181,24 @@ let queryDB = function(qname, Sender_ID, send){
 		}, 1000);
 	});
 };
-let queryIdentity = function(query){
+let queryIdentity = function(Sender_ID){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 		let identity = 0;
-		if(client.db("nctumycommunity").collection('whitelist').find(query).count() != 0){
-			console.log(`${query.PSID} exist on whitelist`);
+		if(client.db("nctumycommunity").collection('whitelist').find({'PSID' : Number(Sender_ID)}).count() != 0){
+			console.log(`${Sender_ID} exist on whitelist`);
 			identity++;
 		}
 		else{
 			console.log(`Doesn't Exist!!!`);
 			return -1;
 		}
-		if(client.db("nctumycommunity").collection('adminlist').find(query).count() != 0){
-			console.log(`${query.PSID} is an admin`);
+		if(client.db("nctumycommunity").collection('adminlist').find({'PSID' : Number(Sender_ID)}).count() != 0){
+			console.log(`${Sender_ID} is an admin`);
 			identity++;
 		}
 		else{
-			console.log(`${query.PSID} is not an admin`);
+			console.log(`${Sender_ID} is not an admin`);
 		}
 		return new Promise(function(resolve, reject){
 			resolve(identity);
