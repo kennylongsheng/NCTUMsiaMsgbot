@@ -184,12 +184,12 @@ let queryIdentity = function(query){
 		console.log(query);
 
 		if(client.db("nctumycommunity").collection('whitelist').find(query).count() != 0){
-			console.log(`Exist!!!`);
+			console.log(`${query.PSID} exist on whitelist`);
 		}
 		else{
 			console.log(`Doesn't Exist!!!`);
 		}
-		
+
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
 			if(err){console.log(err)};
 			result.forEach(function(doc){
