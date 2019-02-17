@@ -17,8 +17,6 @@ const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('adminPage/help.txt','utf8');
 let msgPar = queue();
 
-let identity = 0; 
-
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log(`webhook is listening`));
 
@@ -54,9 +52,9 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				queryIdentity(Sender_ID);
+				let result = queryIdentity(Sender_ID);
 				setTimeout(function(){
-					console.log(`Identity after -> ${identity}`);
+					console.log(`Result after -> ${result}`);
 					distinguishMSG(Sender_ID,Message);
 				}, 1000);
 			}
@@ -185,13 +183,18 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(Sender_ID){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
+		let identity = 0;
 		if(client.db("nctumycommunity").collection('whitelist').find({'PSID' : Number(Sender_ID)}).count() != 0){
 			console.log(`${Sender_ID} exist on whitelist`);
 			identity++;
+		}
+		else {
+			return -1; 
 		}
 		if(client.db("nctumycommunity").collection('adminlist').find({'PSID' : Number(Sender_ID)}).count() != 0){
 			console.log(`${Sender_ID} is an admin`);
 			identity++;
 		}
+		return identity;
 	});
 };
