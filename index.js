@@ -182,12 +182,11 @@ let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 		
-		if(client.db("nctumycommunity").collection('whitelist').find(query).count() == 1){
+		if(client.db("nctumycommunity").collection('whitelist').find(query).count() > 0){
 			console.log(`Exist!!!`);
 		}
 		else
 		{
-			console.log(client.db("nctumycommunity").collection('whitelist').find(query).count());
 			console.log(`Doesn't exist`);
 		}
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
