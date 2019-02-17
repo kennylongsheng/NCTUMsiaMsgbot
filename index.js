@@ -183,13 +183,11 @@ let queryIdentity = function(query){
 		assert.equal(null, err);
 
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
-			console.log(`Result length -> ${result.length}`);
 			if(err){console.log(err)};
 			if(!result.length){;}
 			else{
 				result.forEach(function(doc){
 					console.log(JSON.stringify(doc));
-					console.log(`Doc.facebook -> ${doc.facebook}`);
 				})
 			}
 		});
