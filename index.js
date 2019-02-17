@@ -178,7 +178,7 @@ let queryDB = function(qname, Sender_ID, send){
 			}
 			//console.log(`Message Check -> ${message}`); //Final Check Message
 			send(Sender_ID, message);
-		}, 1000);
+		}, 100);
 	});
 };
 let queryIdentity = function(Sender_ID){
