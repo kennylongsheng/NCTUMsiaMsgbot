@@ -182,25 +182,16 @@ let queryIdentity = function(query){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
 
-		console.log(`_________________`)
-		console.log(client.db("nctumycommunity").collection('whitelist').find(query));
-		console.log(`_________________`)
-		
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
-			console.log(result);
+			console.log(`Result length -> ${result.length}`);
 			if(err){console.log(err)};
 			if(!result.length){;}
 			else{
 				result.forEach(function(doc){
 					console.log(JSON.stringify(doc));
+					console.log(`Doc.facebook -> ${doc.facebook}`);
 				})
 			}
 		});
-
-		// let ans = client.db("nctumycommunity").collection('whitelist').find(query);
-		
-		// ans.forEach((doc)=>{
-		// console.log(`${JSON.stringify(doc)} \n ${typeof(doc)}`);
-		// })
 	});
 };
