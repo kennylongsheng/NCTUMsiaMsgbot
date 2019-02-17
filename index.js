@@ -193,7 +193,7 @@ let queryIdentity = function(query){
 			// 	result.forEach(function(doc){
 			// 		console.log(JSON.stringify(doc));
 			// 	})
-			}
+			//}
 		});
 	});
 };
