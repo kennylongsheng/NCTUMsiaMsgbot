@@ -185,7 +185,6 @@ let queryDB = function(qname, Sender_ID, send){
 let queryIdentity = function(Sender_ID){
 	mongoClient.connect(MlabURI, { useNewUrlParser: true }, function(err,client){
 		assert.equal(null, err);
-		let identity = 0;
 		if(client.db("nctumycommunity").collection('whitelist').find({'PSID' : Number(Sender_ID)}).count() != 0){
 			console.log(`${Sender_ID} exist on whitelist`);
 			identity++;
