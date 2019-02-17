@@ -8,7 +8,6 @@ const fs = require('fs');
 const assert = require('assert');
 const mongoClient = require('mongodb').MongoClient;
 const queue = require('queue');
-const path = require('path');
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -53,8 +52,9 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				let ID_Result = queryIdentity({'PSID' : Number(Sender_ID)});
-				console.log(`ID_Result -> ${ID_Result}`)
+				queryIdentity({'PSID' : Number(Sender_ID)}).then(function(result){
+					console.log(`ID_Result -> ${result}`);
+				});
 				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
@@ -191,13 +191,15 @@ let queryIdentity = function(query){
 			console.log(`Doesn't Exist!!!`);
 			return -1;
 		}
-		if(client.db("nctumycommunity").collection('admin').find(query).count() != 0){
+		if(client.db("nctumycommunity").collection('adminlist').find(query).count() != 0){
 			console.log(`${query.PSID} is an admin`);
 			identity++;
 		}
 		else{
 			console.log(`${query.PSID} is not an admin`);
 		}
-		return identity
+		return new Promise(function(resolve, reject){
+			resolve(identity);
+		});
 	});
 };
