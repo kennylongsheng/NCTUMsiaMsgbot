@@ -54,14 +54,11 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				console.log(`Identity before -> ${identity}`);
-				let result = queryIdentity(Sender_ID);
-				console.log(result)
+				queryIdentity(Sender_ID);
 				setTimeout(function(){
 					console.log(`Identity after -> ${identity}`);
-					console.log(result)
 					distinguishMSG(Sender_ID,Message);
-				}, 100);
+				}, 1000);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
@@ -101,7 +98,7 @@ let sendAPI = function(Sender_ID, Send_Message){
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
 let distinguishMSG = function(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
-	console.log(`Identity disting -> ${identity}`);
+
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
