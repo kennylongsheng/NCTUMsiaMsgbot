@@ -15,7 +15,9 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const KennyPSID = process.env.KENNYPSID;
 const MlabURI = process.env.MLABURI;
 const HELP_PTR = fs.readFileSync('adminPage/help.txt','utf8');
-var msgPar = queue();
+let msgPar = queue();
+
+let identity = 0; 
 
 //////////////////////////////////SETUP WEBHOOK--Don't Change//////////////////////////////////////////////////
 app.listen(process.env.PORT || 9482 ,() => console.log(`webhook is listening`));
@@ -52,7 +54,10 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				distinguishMSG(Sender_ID,Message,queryIdentity(Sender_ID));
+				console.log(`Identity before -> ${identity}`);
+				queryIdentity(Sender_ID);
+				console.log(`Identity after -> ${identity}`);
+				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
 			{
@@ -90,9 +95,9 @@ let sendAPI = function(Sender_ID, Send_Message){
 	})
 };
 //////////////////////////////////Message Distinguish//////////////////////////////////////////////////
-let distinguishMSG = function(Sender_ID, Message_Input, identity){
+let distinguishMSG = function(Sender_ID, Message_Input){
 	let Message_Array = Message_Input.split(" ");
-	console.log(identity);
+	console.log(`Identity disting -> ${identity}`);
 	// PRIORITY :  number > insert > request > help
 	// number <Name>
 	if(Message_Input.includes("number")){ 
@@ -184,17 +189,9 @@ let queryIdentity = function(Sender_ID){
 			console.log(`${Sender_ID} exist on whitelist`);
 			identity++;
 		}
-		else{
-			console.log(`Doesn't Exist!!!`);
-			return -1;
-		}
 		if(client.db("nctumycommunity").collection('adminlist').find({'PSID' : Number(Sender_ID)}).count() != 0){
 			console.log(`${Sender_ID} is an admin`);
 			identity++;
 		}
-		else{
-			console.log(`${Sender_ID} is not an admin`);
-		}
-		return identity;
 	});
 };
