@@ -187,6 +187,7 @@ let queryIdentity = function(query){
 		}
 		else
 		{
+			console.log(client.db("nctumycommunity").collection('whitelist').find(query).count());
 			console.log(`Doesn't exist`);
 		}
 		client.db("nctumycommunity").collection('whitelist').find(query,function(err, result){
