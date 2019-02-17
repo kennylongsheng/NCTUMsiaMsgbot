@@ -8,6 +8,7 @@ const fs = require('fs');
 const assert = require('assert');
 const mongoClient = require('mongodb').MongoClient;
 const queue = require('queue');
+const Promise = require('promise');
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
