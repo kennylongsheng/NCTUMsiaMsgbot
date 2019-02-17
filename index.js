@@ -8,7 +8,6 @@ const fs = require('fs');
 const assert = require('assert');
 const mongoClient = require('mongodb').MongoClient;
 const queue = require('queue');
-const Promise = require('promise');
 
 // SETUP ENV CONFIG : https://devcenter.heroku.com/articles/config-vars#managing-config-vars
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -53,10 +52,8 @@ app.post('/webhook', (req,res) => {
 			{
 				let Message = webhook_event.message.text.toLowerCase();
 				console.log(`${Sender_ID} -> send a text message`);
-				queryIdentity(Sender_ID).then(function(result){
-					console.log(`ID_Result -> ${result}`);
-					return sendAPI(Sender_ID,result);
-				});
+				let result = queryIdentity(Sender_ID);
+				console.log(result)
 				distinguishMSG(Sender_ID,Message);
 			}
 			else if(webhook_event.message&&webhook_event.message.attachments[0]) // Received Attachement
@@ -200,8 +197,6 @@ let queryIdentity = function(Sender_ID){
 		else{
 			console.log(`${Sender_ID} is not an admin`);
 		}
-		return new Promise(function(resolve, reject){
-			resolve(identity);
-		});
+		return identity;
 	});
 };
